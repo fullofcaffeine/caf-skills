@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import hashlib
+import importlib.util
 import os
 from pathlib import Path
 import stat
@@ -268,7 +269,32 @@ print('fake repomix security check passed')
 
         result = self.cli("prepare", "--request", str(request), check=False)
         self.assertEqual(result.returncode, 2)
-        self.assertIn("evidence path traverses a symlink", result.stderr)
+        self.assertIn("traverses a symlink", result.stderr)
+
+    def test_open_evidence_descriptor_pins_original_file_after_path_swap(self) -> None:
+        spec = importlib.util.spec_from_file_location("oracle_request_under_test", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        evidence = self.root / "evidence.log"
+        evidence.write_bytes(b"SAFE\n")
+        private = self.root / "private.log"
+        private.write_bytes(b"PRIVATE_MARKER\n")
+        replacement = self.root / "replacement-link"
+        try:
+            replacement.symlink_to(private)
+        except OSError as exc:
+            self.skipTest(f"symlinks unavailable: {exc}")
+
+        source_fd = module.open_evidence_no_symlinks(module.evidence_lexical_path(str(evidence)))
+        os.replace(replacement, evidence)
+        try:
+            with os.fdopen(source_fd, "rb", closefd=False) as source_handle:
+                self.assertEqual(source_handle.read(), b"SAFE\n")
+        finally:
+            os.close(source_fd)
 
 
 if __name__ == "__main__":

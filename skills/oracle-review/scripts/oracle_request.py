@@ -382,26 +382,42 @@ def safe_regular_source(root: Path, relative: str) -> Path:
     return resolved
 
 
-def safe_evidence_source(raw: str) -> Path:
+def evidence_lexical_path(raw: str) -> Path:
     lexical = Path(raw).expanduser()
     if not lexical.is_absolute():
         lexical = Path.cwd() / lexical
     if is_sensitive_path(lexical.as_posix()):
         raise RequestError(f"evidence has a sensitive path: {lexical}")
-    cursor = Path(lexical.anchor)
-    for part in lexical.parts[1:]:
-        cursor = cursor / part
-        if cursor.is_symlink():
-            macos_tmp_alias = cursor == Path("/tmp") and cursor.resolve() == Path("/private/tmp")
-            if not macos_tmp_alias:
-                raise RequestError(f"evidence path traverses a symlink: {lexical}")
+    for alias, physical in ((Path("/tmp"), Path("/private/tmp")), (Path("/var"), Path("/private/var"))):
+        if alias.is_symlink() and alias.resolve() == physical:
+            try:
+                lexical = physical / lexical.relative_to(alias)
+            except ValueError:
+                continue
+            break
+    return lexical
+
+
+def open_evidence_no_symlinks(path: Path) -> int:
+    required_flags = ("O_DIRECTORY", "O_NOFOLLOW")
+    if any(not hasattr(os, name) for name in required_flags):
+        raise RequestError("secure evidence copying requires O_DIRECTORY and O_NOFOLLOW support")
+    directory_fd = os.open(path.anchor, os.O_RDONLY | os.O_DIRECTORY)
     try:
-        resolved = lexical.resolve(strict=True)
+        for part in path.parts[1:-1]:
+            next_fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=directory_fd)
+            os.close(directory_fd)
+            directory_fd = next_fd
+        file_fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=directory_fd)
     except OSError as exc:
-        raise RequestError(f"evidence must be a regular file: {lexical}") from exc
-    if not resolved.is_file():
-        raise RequestError(f"evidence must be a regular file: {lexical}")
-    return resolved
+        raise RequestError(f"evidence path is missing, non-regular, or traverses a symlink: {path}") from exc
+    finally:
+        os.close(directory_fd)
+    opened = os.fstat(file_fd)
+    if not stat.S_ISREG(opened.st_mode):
+        os.close(file_fd)
+        raise RequestError(f"evidence must be a regular file: {path}")
+    return file_fd
 
 
 def repomix_pack(root: Path, paths: list[str], output: Path) -> str:
@@ -457,18 +473,30 @@ def copy_evidence(spec: dict[str, object], staging: Path) -> list[dict[str, obje
     for raw in spec.get("evidence", []):
         if not isinstance(raw, str):
             raise RequestError("evidence entries must be paths")
-        source = safe_evidence_source(raw)
+        source = evidence_lexical_path(raw)
         if source.name in names:
             raise RequestError(f"duplicate evidence basename: {source.name}")
         names.add(source.name)
         evidence_dir.mkdir(parents=True, exist_ok=True)
         destination = evidence_dir / source.name
-        before_digest = file_sha256(source)
-        shutil.copyfile(source, destination)
-        after_digest = file_sha256(source)
-        copied_digest = file_sha256(destination)
-        if before_digest != after_digest or copied_digest != before_digest:
+        source_fd = open_evidence_no_symlinks(source)
+        digest = hashlib.sha256()
+        try:
+            before = os.fstat(source_fd)
+            with os.fdopen(source_fd, "rb", closefd=False) as source_handle, destination.open("xb") as destination_handle:
+                for chunk in iter(lambda: source_handle.read(1024 * 1024), b""):
+                    digest.update(chunk)
+                    destination_handle.write(chunk)
+            after = os.fstat(source_fd)
+        finally:
+            os.close(source_fd)
+        identity_before = (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns)
+        identity_after = (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns)
+        if identity_before != identity_after:
             raise RequestError(f"evidence changed during packaging: {source}")
+        copied_digest = file_sha256(destination)
+        if copied_digest != digest.hexdigest() or destination.stat().st_size != before.st_size:
+            raise RequestError(f"evidence copy does not match the opened source: {source}")
         ensure_private(destination)
         entries.append({"path": f"evidence/{source.name}", "bytes": destination.stat().st_size, "sha256": copied_digest})
     return entries
