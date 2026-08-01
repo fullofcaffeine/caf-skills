@@ -14,9 +14,10 @@ it does not prove the runtime setting changed.
 - When that threshold is crossed, say why, stop disputed implementation, build
   the checked GPT-5.6 Pro handoff under `/tmp/oracle`, and wait for the human to
   return the response. Oracle is advisory and never replaces repository
-  evidence, tests, CI, owner decisions, or the standard `show-me-your-work`
-  reviewer. Do not invoke it for routine debugging, unfamiliar code, slow work,
-  a large but bounded diff, or a generic desire for another opinion.
+  evidence, tests, CI, owner decisions, or a risk-based independent review when
+  `show-me-your-work` requires one. Do not invoke it for routine debugging,
+  unfamiliar code, slow work, a large but bounded diff, or a generic desire for
+  another opinion.
 
 ## Commit Messages
 
