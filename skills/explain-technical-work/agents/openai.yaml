@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explain Technical Work"
+  short_description: "Explain technical work in clear, everyday language"
+  default_prompt: "Use $explain-technical-work to explain this material in familiar language for a capable newcomer. Avoid unnecessary jargon, explain any exact specialist term that must remain, and preserve technical accuracy."

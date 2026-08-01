@@ -1,0 +1,4 @@
+interface:
+  display_name: "Calibrate Reasoning Effort"
+  short_description: "Choose and apply the lowest effective reasoning level"
+  default_prompt: "Use $calibrate-reasoning-effort to recommend and apply the lowest effective reasoning level, then release elevated effort—especially max—as soon as its task phase ends."

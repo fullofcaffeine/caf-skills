@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git History Scrub Safety"
+  short_description: "Safe git history scrub workflow"
+  default_prompt: "Run a safe history scrub workflow for sensitive data in this repo, including backups, isolated rewrite, verification, and rollback plan."

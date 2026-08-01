@@ -1,0 +1,10 @@
+.DS_Store
+backups/
+.audit/
+decisions.tsv
+__pycache__/
+*.py[cod]
+repomix-output*
+*.zip
+*.tar
+*.tar.gz

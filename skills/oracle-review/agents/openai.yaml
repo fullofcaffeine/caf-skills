@@ -1,0 +1,4 @@
+interface:
+  display_name: "Oracle Review"
+  short_description: "Package rare GPT-5.6 Pro architecture reviews"
+  default_prompt: "Use $oracle-review to prepare a GPT-5.6 Pro review packet for this unresolved architecture decision."
