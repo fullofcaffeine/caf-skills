@@ -50,5 +50,6 @@ Rules:
   common secret-bearing names and Gitleaks findings.
 - Add logs, plans, reviewer reports, or other non-repository artifacts through
   `evidence`. Use unique basenames and include only what the question needs.
+  Evidence files and their path components must not be symlinks.
 - Keep repository roots stable while `prepare` runs. The packager hashes inputs
   before and after Repomix and fails if evidence changed mid-pack.

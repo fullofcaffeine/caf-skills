@@ -250,6 +250,26 @@ print('fake repomix security check passed')
         self.assertNotIn("fixture.bin", git_state["selected_tracked_changes"])
         self.assertNotIn(b"UNSELECTED_BINARY_MARKER", payload)
 
+    def test_prepare_rejects_symlinked_evidence(self) -> None:
+        evidence = self.root / "private-evidence.log"
+        evidence.write_text("synthetic private evidence\n", encoding="utf-8")
+        link = self.root / "linked-evidence.log"
+        try:
+            link.symlink_to(evidence)
+        except OSError as exc:
+            self.skipTest(f"symlinks unavailable: {exc}")
+        request = self.initialize()
+        (request / "PROMPT.md").write_text("Review the selected source and evidence safely.\n", encoding="utf-8")
+        spec_path = request / "request.local.json"
+        spec = json.loads(spec_path.read_text(encoding="utf-8"))
+        spec["repositories"][0]["include"] = ["README.md"]
+        spec["evidence"] = [str(link)]
+        spec_path.write_text(json.dumps(spec), encoding="utf-8")
+
+        result = self.cli("prepare", "--request", str(request), check=False)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("evidence path traverses a symlink", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

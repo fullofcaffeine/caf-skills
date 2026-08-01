@@ -382,6 +382,28 @@ def safe_regular_source(root: Path, relative: str) -> Path:
     return resolved
 
 
+def safe_evidence_source(raw: str) -> Path:
+    lexical = Path(raw).expanduser()
+    if not lexical.is_absolute():
+        lexical = Path.cwd() / lexical
+    if is_sensitive_path(lexical.as_posix()):
+        raise RequestError(f"evidence has a sensitive path: {lexical}")
+    cursor = Path(lexical.anchor)
+    for part in lexical.parts[1:]:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            macos_tmp_alias = cursor == Path("/tmp") and cursor.resolve() == Path("/private/tmp")
+            if not macos_tmp_alias:
+                raise RequestError(f"evidence path traverses a symlink: {lexical}")
+    try:
+        resolved = lexical.resolve(strict=True)
+    except OSError as exc:
+        raise RequestError(f"evidence must be a regular file: {lexical}") from exc
+    if not resolved.is_file():
+        raise RequestError(f"evidence must be a regular file: {lexical}")
+    return resolved
+
+
 def repomix_pack(root: Path, paths: list[str], output: Path) -> str:
     if shutil.which("npx") is None:
         raise RequestError("npx is required to run pinned Repomix")
@@ -435,17 +457,20 @@ def copy_evidence(spec: dict[str, object], staging: Path) -> list[dict[str, obje
     for raw in spec.get("evidence", []):
         if not isinstance(raw, str):
             raise RequestError("evidence entries must be paths")
-        source = Path(raw).expanduser().resolve()
-        if not source.is_file() or source.is_symlink():
-            raise RequestError(f"evidence must be a regular file: {source}")
+        source = safe_evidence_source(raw)
         if source.name in names:
             raise RequestError(f"duplicate evidence basename: {source.name}")
         names.add(source.name)
         evidence_dir.mkdir(parents=True, exist_ok=True)
         destination = evidence_dir / source.name
+        before_digest = file_sha256(source)
         shutil.copyfile(source, destination)
+        after_digest = file_sha256(source)
+        copied_digest = file_sha256(destination)
+        if before_digest != after_digest or copied_digest != before_digest:
+            raise RequestError(f"evidence changed during packaging: {source}")
         ensure_private(destination)
-        entries.append({"path": f"evidence/{source.name}", "bytes": destination.stat().st_size, "sha256": file_sha256(destination)})
+        entries.append({"path": f"evidence/{source.name}", "bytes": destination.stat().st_size, "sha256": copied_digest})
     return entries
 
 
