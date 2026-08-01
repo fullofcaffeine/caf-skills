@@ -5,7 +5,8 @@ Reusable Codex skills and personal global agent guidance maintained by
 
 ## What is here
 
-- `AGENTS.md` contains optional global working rules.
+- `AGENTS.md` contains optional global working rules, including shared Haxe 4
+  authoring, boundary, generated-output, testing, and documentation practices.
 - `skills/` contains independently loadable Codex skills.
 - `skills/oracle-review` packages rare GPT-5.6 Pro architecture and critical
   review escalations for manual human handoff.
