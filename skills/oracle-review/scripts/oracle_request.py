@@ -101,6 +101,15 @@ def archived_root(project: str) -> Path:
     return ORACLE_ROOT / "archived" / safe_slug(project)
 
 
+def display_path(path: Path) -> Path:
+    """Keep user-facing paths under the configured root's logical spelling."""
+    try:
+        relative = path.resolve().relative_to(ORACLE_ROOT.resolve())
+    except ValueError:
+        return path
+    return ORACLE_ROOT / relative
+
+
 def pending_requests(project: str) -> list[Path]:
     root = pending_root(project)
     if not root.is_dir():
@@ -542,7 +551,7 @@ def command_prepare(args: argparse.Namespace) -> None:
             request / ".state.json",
             {"schema_version": SCHEMA_VERSION, "status": "prepared", "prepared_at": manifest["prepared_at"], "bundle_sha256": file_sha256(bundle)},
         )
-        print(bundle)
+        print(display_path(bundle))
     finally:
         shutil.rmtree(staging, ignore_errors=True)
 

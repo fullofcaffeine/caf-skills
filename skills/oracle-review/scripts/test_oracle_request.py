@@ -115,6 +115,7 @@ print('fake repomix security check passed')
         spec_path.write_text(json.dumps(spec), encoding="utf-8")
 
         prepared = self.cli("prepare", "--request", str(request))
+        self.assertTrue(prepared.stdout.strip().startswith(str(self.oracle_root)))
         bundle = Path(prepared.stdout.strip())
         self.assertTrue(bundle.is_file())
         with zipfile.ZipFile(bundle) as archive:

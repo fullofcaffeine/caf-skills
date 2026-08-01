@@ -71,8 +71,10 @@ and wait for the response or an explicit smaller-scope waiver.
    The command pins Repomix, preserves line numbers, verifies the requested
    inventory, checks for file races and secrets, records revisions/diffs and
    hashes, and writes `bundle.zip`. Do not bypass a failed completeness or
-   security check. Inspect `MANIFEST.json`, `SOURCE_INVENTORY.tsv`, and the ZIP
-   listing before handoff.
+   security check. `MANIFEST.json` and `SOURCE_INVENTORY.tsv` are entries inside
+   the ZIP, not loose request-directory files. Inspect them and the listing
+   before handoff, for example with `unzip -p <bundle.zip> MANIFEST.json`,
+   `unzip -p <bundle.zip> SOURCE_INVENTORY.tsv`, and `unzip -l <bundle.zip>`.
 
 5. Give the user the exact ZIP path and ask them to upload it to GPT-5.6 Pro,
    paste `PROMPT.md`, and return the complete response here. Never upload,
