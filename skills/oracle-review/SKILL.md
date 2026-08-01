@@ -71,7 +71,9 @@ and wait for the response or an explicit smaller-scope waiver.
    The command pins Repomix, preserves line numbers, verifies the requested
    inventory, checks for file races and secrets, records revisions/diffs and
    hashes, and writes `bundle.zip`. Do not bypass a failed completeness or
-   security check. `MANIFEST.json` and `SOURCE_INVENTORY.tsv` are entries inside
+   security check. Git-state metadata and patches are limited to the selected,
+   non-omitted paths; selective packs never disclose unrelated working-tree
+   names or content. `MANIFEST.json` and `SOURCE_INVENTORY.tsv` are entries inside
    the ZIP, not loose request-directory files. Inspect them and the listing
    before handoff, for example with `unzip -p <bundle.zip> MANIFEST.json`,
    `unzip -p <bundle.zip> SOURCE_INVENTORY.tsv`, and `unzip -l <bundle.zip>`.

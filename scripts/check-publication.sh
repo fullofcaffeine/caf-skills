@@ -4,17 +4,13 @@ set -euo pipefail
 repo_root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 mode=${1:-}
 
-if [[ "$mode" == "--all" || ! -d "$repo_root/.git" ]]; then
-  mapfile_cmd=(find "$repo_root" -path "$repo_root/.git" -prune -o -path "$repo_root/backups" -prune -o -type f -print)
-  if [[ $(uname -s) == "Darwin" ]]; then
-    files=()
-    while IFS= read -r file; do files+=("$file"); done < <("${mapfile_cmd[@]}")
-  else
-    mapfile -t files < <("${mapfile_cmd[@]}")
-  fi
+files=()
+if [[ -d "$repo_root/.git" && "$mode" == "--all" ]]; then
+  while IFS= read -r -d '' file; do files+=("$repo_root/$file"); done < <(git -C "$repo_root" ls-files -z)
+elif [[ ! -d "$repo_root/.git" ]]; then
+  while IFS= read -r -d '' file; do files+=("$file"); done < <(find "$repo_root" -path "$repo_root/.git" -prune -o -type f -print0)
 else
-  files=()
-  while IFS= read -r file; do files+=("$repo_root/$file"); done < <(git -C "$repo_root" diff --cached --name-only --diff-filter=ACMR)
+  while IFS= read -r -d '' file; do files+=("$repo_root/$file"); done < <(git -C "$repo_root" diff --cached --name-only --diff-filter=ACMR -z)
 fi
 
 if [[ ${#files[@]} -eq 0 ]]; then

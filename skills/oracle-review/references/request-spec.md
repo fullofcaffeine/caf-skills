@@ -40,6 +40,11 @@ Rules:
   patterns with plain-language reasons for known irrelevant bulk.
 - `selective` requires one or more exact paths or glob patterns. A pattern that
   matches nothing fails the request.
+- Git-state metadata and working-tree patches are scoped to the selected paths
+  after omissions. Unrelated dirty files are not named or copied into the ZIP.
+- ZIP entries use canonical ordering, timestamps, and permissions. The manifest
+  records the real preparation time, so separate preparation events are not
+  promised to have the same bundle digest.
 - Never include credential files, private keys, browser/session data, auth
   configuration, or unrelated private artifacts. The packager fails closed on
   common secret-bearing names and Gitleaks findings.

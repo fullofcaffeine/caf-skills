@@ -101,6 +101,14 @@ def archived_root(project: str) -> Path:
     return ORACLE_ROOT / "archived" / safe_slug(project)
 
 
+def private_project_root(state: str, project: str) -> Path:
+    directories = (ORACLE_ROOT, ORACLE_ROOT / state, ORACLE_ROOT / state / safe_slug(project))
+    for directory in directories:
+        directory.mkdir(exist_ok=True, mode=0o700)
+        ensure_private(directory, directory=True)
+    return directories[-1]
+
+
 def display_path(path: Path) -> Path:
     """Keep user-facing paths under the configured root's logical spelling."""
     try:
@@ -225,8 +233,8 @@ def command_init(args: argparse.Namespace) -> None:
             "acknowledge them and pass --allow-pending only for a distinct request"
         )
     timestamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    request = pending_root(project) / f"{timestamp}-{task}"
-    request.mkdir(parents=True, exist_ok=False, mode=0o700)
+    request = private_project_root("pending", project) / f"{timestamp}-{task}"
+    request.mkdir(exist_ok=False, mode=0o700)
     ensure_private(request, directory=True)
     spec = {
         "schema_version": SCHEMA_VERSION,
@@ -323,12 +331,55 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def repository_metadata(root: Path) -> dict[str, object]:
+def git_nul_paths(root: Path, args: list[str]) -> list[str]:
+    result = subprocess.run(
+        args,
+        cwd=root,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise RequestError(result.stderr.decode("utf-8", "replace").strip())
+    return [part.decode("utf-8", "surrogateescape") for part in result.stdout.split(b"\0") if part]
+
+
+def repository_metadata(root: Path, selected: list[str]) -> dict[str, object]:
     head = run(["git", "rev-parse", "HEAD"], cwd=root).stdout.strip()
-    status_text = run(["git", "status", "--short"], cwd=root).stdout
-    remote = run(["git", "remote", "get-url", "origin"], cwd=root, check=False)
-    remote_value = remote.stdout.strip() if remote.returncode == 0 else None
-    return {"head": head, "dirty": bool(status_text.strip()), "remote": remote_value, "status": status_text}
+    selected_set = set(selected)
+    changed = sorted(
+        selected_set.intersection(git_nul_paths(root, ["git", "diff", "--name-only", "-z", "HEAD"]))
+    )
+    untracked = sorted(
+        selected_set.intersection(git_nul_paths(root, ["git", "ls-files", "--others", "--exclude-standard", "-z"]))
+    )
+    return {
+        "head": head,
+        "selected_dirty": bool(changed or untracked),
+        "selected_tracked_changes": changed,
+        "selected_untracked": untracked,
+    }
+
+
+def scoped_working_tree_patch(root: Path, changed: list[str]) -> str:
+    parts: list[str] = []
+    for start in range(0, len(changed), 100):
+        chunk = changed[start : start + 100]
+        parts.append(run(["git", "--literal-pathspecs", "diff", "--binary", "HEAD", "--", *chunk], cwd=root).stdout)
+    return "".join(parts)
+
+
+def safe_regular_source(root: Path, relative: str) -> Path:
+    lexical = root / relative
+    cursor = root
+    for part in Path(relative).parts:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            raise RequestError(f"selected path traverses a symlink: {relative}")
+    resolved = lexical.resolve()
+    if root not in resolved.parents or not resolved.is_file():
+        raise RequestError(f"selected path is not a safe regular file: {relative}")
+    return resolved
 
 
 def repomix_pack(root: Path, paths: list[str], output: Path) -> str:
@@ -398,7 +449,8 @@ def copy_evidence(spec: dict[str, object], staging: Path) -> list[dict[str, obje
     return entries
 
 
-def deterministic_zip(staging: Path, destination: Path) -> None:
+def write_canonical_zip(staging: Path, destination: Path) -> None:
+    """Canonicalize ZIP encoding while retaining truthful manifest event data."""
     with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in sorted(item for item in staging.rglob("*") if item.is_file()):
             relative = path.relative_to(staging).as_posix()
@@ -443,12 +495,12 @@ def command_prepare(args: argparse.Namespace) -> None:
             roots.append(root)
             mode = repo_obj.get("mode")
             if mode == "full":
-                selected = git_files(root)
+                candidate_paths = git_files(root)
             elif mode == "selective":
-                selected = expand_selective(root, repo_obj.get("include", []))
+                candidate_paths = expand_selective(root, repo_obj.get("include", []))
             else:
                 raise RequestError(f"repository {label} mode must be full or selective")
-            selected, omitted = apply_omissions(selected, repo_obj.get("omit", []))
+            selected, omitted = apply_omissions(candidate_paths, repo_obj.get("omit", []))
             sensitive = [path for path in selected if is_sensitive_path(path)]
             if sensitive:
                 raise RequestError(f"repository {label} selected sensitive path(s): {', '.join(sensitive)}")
@@ -457,10 +509,10 @@ def command_prepare(args: argparse.Namespace) -> None:
 
             text_paths: list[str] = []
             before_hashes: dict[str, str] = {}
+            source_paths: dict[str, Path] = {}
             for relative in selected:
-                source = (root / relative).resolve()
-                if root not in source.parents or not source.is_file() or source.is_symlink():
-                    raise RequestError(f"repository {label} path is not a safe regular file: {relative}")
+                source = safe_regular_source(root, relative)
+                source_paths[relative] = source
                 digest = file_sha256(source)
                 before_hashes[relative] = digest
                 if is_binary(source):
@@ -479,29 +531,30 @@ def command_prepare(args: argparse.Namespace) -> None:
                 missing = sorted(expected - packed)
                 extra = sorted(packed - expected)
                 raise RequestError(f"Repomix inventory mismatch for {label}: missing={missing}, extra={extra}")
-            after_hashes = {path: file_sha256(root / path) for path in selected}
+            after_hashes = {path: file_sha256(source_paths[path]) for path in selected}
             changed = sorted(path for path in before_hashes if before_hashes[path] != after_hashes[path])
             if changed:
                 raise RequestError(f"repository {label} changed during packaging: {', '.join(changed)}")
 
-            metadata = repository_metadata(root)
-            status_path = staging / f"{label}.git-status.txt"
-            write_text(status_path, str(metadata.pop("status")))
-            diff = run(["git", "diff", "--binary", "HEAD"], cwd=root).stdout
+            packed_paths = sorted(text_paths)
+            metadata = repository_metadata(root, packed_paths)
+            write_json(staging / f"{label}.git-state.json", metadata)
+            diff = scoped_working_tree_patch(root, list(metadata["selected_tracked_changes"]))
             if diff:
                 write_text(staging / f"{label}.working-tree.patch", diff)
-            for relative in sorted(selected):
-                source = root / relative
-                disposition = "omitted" if relative in omitted else "included"
-                reason = omitted.get(relative, "")
-                cells = [label, relative, str(source.stat().st_size), after_hashes[relative], disposition, reason]
+            for relative in packed_paths:
+                source = source_paths[relative]
+                cells = [label, relative, str(source.stat().st_size), after_hashes[relative], "included", ""]
+                inventory_rows.append("\t".join(cell.replace("\t", " ").replace("\n", " ") for cell in cells))
+            for relative, reason in sorted(omitted.items()):
+                cells = [label, relative, "", "", "omitted", reason]
                 inventory_rows.append("\t".join(cell.replace("\t", " ").replace("\n", " ") for cell in cells))
             manifest_repositories.append(
                 {
                     "label": label,
                     "mode": mode,
                     "revision": metadata,
-                    "selected_file_count": len(selected),
+                    "selected_file_count": len(candidate_paths),
                     "packed_text_file_count": len(text_paths),
                     "omitted_file_count": len(omitted),
                     "pack": f"sources/{label}.xml",
@@ -545,7 +598,7 @@ def command_prepare(args: argparse.Namespace) -> None:
         bundle = request / "bundle.zip"
         if bundle.exists():
             raise RequestError(f"refusing to overwrite existing {bundle}")
-        deterministic_zip(staging, bundle)
+        write_canonical_zip(staging, bundle)
         write_text(request / "bundle.zip.sha256", f"{file_sha256(bundle)}  bundle.zip\n")
         write_json(
             request / ".state.json",
@@ -561,22 +614,50 @@ def command_archive(args: argparse.Namespace) -> None:
     pending_base = (ORACLE_ROOT / "pending").resolve()
     if pending_base not in request.parents:
         raise RequestError(f"request is not under {pending_base}")
+    state_path = request / ".state.json"
+    if not state_path.is_file() or state_path.is_symlink():
+        raise RequestError("cannot archive without a regular .state.json")
+    try:
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise RequestError(f"cannot archive with invalid .state.json: {exc}") from exc
+    if state.get("status") != "prepared":
+        raise RequestError("cannot archive a request that is not in prepared state")
+    expected_digest = state.get("bundle_sha256")
+    bundle = request / "bundle.zip"
+    checksum = request / "bundle.zip.sha256"
+    if not isinstance(expected_digest, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_digest):
+        raise RequestError("prepared state has no valid bundle SHA-256")
+    for required in (bundle, checksum):
+        if not required.is_file() or required.is_symlink():
+            raise RequestError(f"cannot archive without regular {required.name}")
+    actual_digest = file_sha256(bundle)
+    if actual_digest != expected_digest:
+        raise RequestError("bundle.zip no longer matches the prepared state")
+    if checksum.read_text(encoding="utf-8").strip() != f"{actual_digest}  bundle.zip":
+        raise RequestError("bundle.zip.sha256 does not match bundle.zip")
+    try:
+        with zipfile.ZipFile(bundle) as archive:
+            if archive.testzip() is not None:
+                raise RequestError("bundle.zip failed its internal CRC check")
+            manifest = json.loads(archive.read("MANIFEST.json").decode("utf-8"))
+    except (KeyError, UnicodeDecodeError, json.JSONDecodeError, zipfile.BadZipFile) as exc:
+        raise RequestError(f"bundle.zip has no valid MANIFEST.json: {exc}") from exc
+    if manifest.get("request_id") != request.name or manifest.get("prepared_at") != state.get("prepared_at"):
+        raise RequestError("bundle manifest does not match the prepared request state")
     response = request / "ORACLE_RESPONSE.md"
     disposition = request / "DISPOSITION.md"
     for required in (response, disposition):
-        if not required.is_file() or not required.read_text(encoding="utf-8").strip():
+        if not required.is_file() or required.is_symlink() or not required.read_text(encoding="utf-8").strip():
             raise RequestError(f"cannot archive without non-empty {required.name}")
     project = request.parent.name
-    destination = archived_root(project) / request.name
+    destination = private_project_root("archived", project) / request.name
     if destination.exists():
         raise RequestError(f"refusing to overwrite archive {destination}")
-    destination.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-    ensure_private(destination.parent, directory=True)
     shutil.move(str(request), str(destination))
-    write_json(
-        destination / ".state.json",
-        {"schema_version": SCHEMA_VERSION, "status": "archived", "archived_at": utc_now()},
-    )
+    state["status"] = "archived"
+    state["archived_at"] = utc_now()
+    write_json(destination / ".state.json", state)
     print(destination)
 
 
