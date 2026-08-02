@@ -64,20 +64,12 @@ stricter or target-specific contract.
   abstraction exists, what contract it preserves, how it works, and any
   important target or safety constraint; do not narrate obvious assignments.
 
-## Oracle review escalation
+## Oracle planning and review
 
-- Use `$oracle-review` only for the hardest work: a consequential architecture,
-  security, provenance, migration, release, or cross-repository decision that
-  remains ambiguous after deep local investigation; repeated attempts that no
-  longer converge on a stable invariant; or a critical completed task whose
-  normal independent review is demonstrably incomplete.
-- When that threshold is crossed, say why, stop disputed implementation, build
-  the checked GPT-5.6 Pro handoff under `/tmp/oracle`, and wait for the human to
-  return the response. Oracle is advisory and never replaces repository
-  evidence, tests, CI, owner decisions, or a risk-based independent review when
-  `show-me-your-work` requires one. Do not invoke it for routine debugging,
-  unfamiliar code, slow work, a large but bounded diff, or a generic desire for
-  another opinion.
+- Treat the globally installed `$oracle-review` skill as the canonical authority
+  for Oracle eligibility, planning and review modes, caf-oracle automation, and
+  composition with `$show-me-your-work`. Load and follow the skill rather than
+  duplicating its criteria or maintaining a separate manual handoff here.
 
 ## Commit Messages
 

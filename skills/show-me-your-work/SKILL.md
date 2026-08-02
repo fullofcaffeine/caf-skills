@@ -112,22 +112,25 @@ Only when an independent review actually ran, end the final reply with an
 `Attention` section. Name the model and list material flags or `No flags`. When
 no review ran, do not claim one and do not add an empty review footer.
 
-## Optional Oracle escalation for critical reviews
+## Optional Oracle planning and review
 
-After a justified Sol review, use `$oracle-review` as an additional manual
-GPT-5.6 Pro gate only when the task is genuinely critical and the ordinary
-review is demonstrably inadequate. Concrete triggers include failure to inspect
-required artifacts, a known counterexample the reviewer missed, conclusions
-without resolving evidence, or consequential reviewer disagreement. A generic
-review, a slow review, or a no-findings result is not by itself enough.
+Use `$oracle-review` only when the task independently meets that skill's high
+threshold: the work is genuinely critical and also unusually hard, materially
+undefined, non-convergent, disputed by consequential evidence, or in need of a
+slower higher-quality challenge. Oracle may clarify and plan before
+implementation or independently review a plan or completed result. A generic
+review, a slow review, a large task, or a desire for extra confidence is not
+enough.
 
-Oracle does not create a requirement for an ordinary review when none was
-otherwise justified. When escalating an existing review, include this trail,
-the ordinary review report, relevant diff and verification evidence, and the
-known gap in the Oracle packet. Do not claim final independent-review closure
-until the response is reconciled against repository evidence. Let
-`$oracle-review` own the escalation threshold, packaging, handoff, disposition,
-and archive format.
+Oracle does not automatically require a preliminary Sol review, and this skill
+does not automatically trigger Oracle. When an ordinary review already exists
+and its gap motivates escalation, include that report, this trail, the relevant
+diff, verification evidence, and the known gap. Let caf-oracle own prompts,
+bundles, dispatch state, replies, and dispositions; add trail rows only for the
+escalation decision, request identity/status, and reconciled outcome. Do not
+claim planning or review closure until the response is reconciled against
+repository evidence. Let `$oracle-review` own its threshold, automation,
+recovery, reconciliation, and archive format.
 
 ## Reviewing the trail
 
