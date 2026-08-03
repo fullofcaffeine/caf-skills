@@ -13,9 +13,10 @@ elif [[ $# -ne 0 ]]; then
 fi
 
 mkdir -p "$codex_root/skills"
-for source in "$repo_root"/skills/*; do
-  [[ -f "$source/SKILL.md" ]] || continue
-  destination="$codex_root/skills/$(basename "$source")"
+
+link_owned_path() {
+  local source=$1
+  local destination=$2
   if [[ -L "$destination" && $(readlink "$destination") == "$source" ]]; then
     echo "already linked: $destination"
   elif [[ -e "$destination" || -L "$destination" ]]; then
@@ -25,18 +26,18 @@ for source in "$repo_root"/skills/*; do
     ln -s "$source" "$destination"
     echo "linked: $destination -> $source"
   fi
+}
+
+for source in "$repo_root"/skills/*; do
+  [[ -f "$source/SKILL.md" ]] || continue
+  destination="$codex_root/skills/$(basename "$source")"
+  link_owned_path "$source" "$destination"
 done
+
+link_owned_path "$repo_root/skills/README.md" "$codex_root/skills/README.md"
 
 if [[ $install_agents -eq 1 ]]; then
   destination="$codex_root/AGENTS.md"
   source="$repo_root/AGENTS.md"
-  if [[ -L "$destination" && $(readlink "$destination") == "$source" ]]; then
-    echo "already linked: $destination"
-  elif [[ -e "$destination" || -L "$destination" ]]; then
-    echo "refusing to replace existing path: $destination" >&2
-    exit 1
-  else
-    ln -s "$source" "$destination"
-    echo "linked: $destination -> $source"
-  fi
+  link_owned_path "$source" "$destination"
 fi

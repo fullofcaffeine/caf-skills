@@ -8,12 +8,11 @@ Reusable Codex skills and personal global agent guidance maintained by
 - `AGENTS.md` contains optional global working rules, including shared Haxe 4
   authoring, boundary, generated-output, testing, and documentation practices.
 - `skills/` contains independently loadable Codex skills.
-- `skills/oracle-review` packages rare GPT-5.6 Pro architecture and critical
-  review escalations for manual human handoff.
+- `skills/README.md` documents the installed skill registry and source owners.
 
-Oracle is intentionally not a routine reviewer. The skill requires concrete
-architectural ambiguity, non-convergence, or a demonstrably inadequate review
-of critical completed work. Repository evidence and tests remain authoritative.
+The `oracle-review` skill is intentionally owned by the caf-oracle repository,
+next to the CLI, ledger, and browser lifecycle it documents. caf-skills does
+not carry a copy. Install Oracle through caf-oracle's `scripts/install-skill.sh`.
 
 ## Install
 
@@ -25,16 +24,16 @@ pre-commit install
 ./scripts/install.sh
 ```
 
-The installer links every skill into `${CODEX_HOME:-$HOME/.codex}/skills` and
-refuses to replace an existing path it does not own. Pass `--global-agents` to
-also link this repository's `AGENTS.md`; that opt-in likewise refuses to
-overwrite an existing non-matching file.
+The installer links every caf-skills-owned skill and the registry README into
+`${CODEX_HOME:-$HOME/.codex}/skills`. It refuses to replace an existing path it
+does not own. Pass `--global-agents` to also link this repository's `AGENTS.md`;
+that opt-in likewise refuses to overwrite an existing non-matching file.
 
 ## Security
 
 Every commit runs Gitleaks plus private-key, path, merge, symlink, structured
 data, and accidental-artifact checks. CI repeats the full-tree and Git-history
-scans. Oracle request ZIPs belong under `/tmp/oracle`, never in this repository.
+scans. Generated review artifacts never belong in this repository.
 
 Run the full local publication gate with:
 
