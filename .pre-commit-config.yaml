@@ -20,6 +20,11 @@ repos:
       - id: trailing-whitespace
   - repo: local
     hooks:
+      - id: skill-installation
+        name: Verify the shared skill symlink installer
+        entry: scripts/test-install.sh
+        language: script
+        pass_filenames: false
       - id: publication-safety
         name: Reject private paths and generated review artifacts
         entry: scripts/check-publication.sh

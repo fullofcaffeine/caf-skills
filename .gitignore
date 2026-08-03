@@ -8,3 +8,10 @@ repomix-output*
 *.zip
 *.tar
 *.tar.gz
+
+# Beads / Dolt local state. The reviewed client identity is tracked separately.
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
+.beads.gate.lock
