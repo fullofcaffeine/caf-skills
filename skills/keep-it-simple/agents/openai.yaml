@@ -1,0 +1,4 @@
+interface:
+  display_name: "Keep It Simple"
+  short_description: "Use the smallest reliable design that meets the goal"
+  default_prompt: "Use $keep-it-simple to reduce this solution to the smallest reliable design."
