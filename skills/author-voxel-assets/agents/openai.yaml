@@ -1,0 +1,4 @@
+interface:
+  display_name: "Author Voxel Assets"
+  short_description: "Design and validate reusable voxel models"
+  default_prompt: "Use $author-voxel-assets to turn this 2D reference into a reviewed voxel model workflow."
