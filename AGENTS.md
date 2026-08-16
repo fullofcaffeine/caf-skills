@@ -88,10 +88,11 @@ stricter or target-specific contract.
 
 - Treat long, CPU- or memory-intensive local builds, full test suites, native
   compiles, renders, and packaging as background work when an interactive
-  editor shares the host. When `nice` is available, apply it once at the
-  process root, for example `nice -n 10 ./bin/check`, so every child inherits
-  the lower scheduling priority. Use a repository-owned background wrapper
-  instead when one exists.
+  editor shares the host. Apply background scheduling once at the process root
+  so every child inherits it. On macOS, use
+  `taskpolicy -b nice -n 10 ./bin/check` when both commands are available.
+  On other hosts, use `nice -n 10 ./bin/check` when `nice` is available.
+  Use a repository-owned background wrapper when one exists.
 - Keep Codex, its app server, the editor, interactive development servers,
   watch loops, live play sessions, and performance measurements at their
   intended priority. Reduced scheduling priority is a responsiveness control,
