@@ -83,3 +83,20 @@ stricter or target-specific contract.
 - Prefer concrete descriptions of the old and new behavior over a list of
   filenames or internal type names. Technical details are welcome, but
   introduce them in plain language and make the practical outcome clear first.
+
+## Interactive host responsiveness
+
+- Treat long, CPU- or memory-intensive local builds, full test suites, native
+  compiles, renders, and packaging as background work when an interactive
+  editor shares the host. When `nice` is available, apply it once at the
+  process root, for example `nice -n 10 ./bin/check`, so every child inherits
+  the lower scheduling priority. Use a repository-owned background wrapper
+  instead when one exists.
+- Keep Codex, its app server, the editor, interactive development servers,
+  watch loops, live play sessions, and performance measurements at their
+  intended priority. Reduced scheduling priority is a responsiveness control,
+  not valid timing evidence.
+- If an active background process tree causes contention, verify its exact root
+  command and ownership before using `renice 10 -p` on that root and its current
+  descendants. Do not target broad process names, unrelated work, or kill a
+  process unless it is confirmed stale and the user authorized termination.
