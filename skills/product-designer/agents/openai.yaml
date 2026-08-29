@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Designer"
+  short_description: "Turn product intent into tested screenflows"
+  default_prompt: "Use $product-designer to turn this product idea into visual candidates, a complete screenflow, Craft behavior, and an implementation-ready evidence plan."
