@@ -1,6 +1,6 @@
 ---
 name: calibrate-reasoning-effort
-description: Assess task complexity, recommend the lowest effective Codex reasoning setup—low, medium, high, xhigh, max, or ultra—and automatically apply it for subsequent turns whenever a supported host or bundled App Server control is available. Use before substantial work, whenever scope or risk changes, when starting or claiming a task, choosing a thinking label, planning an agent run, answering which reasoning level is appropriate, or balancing quality against latency and token usage. Optimize total expected task cost, including verification, failed attempts, rework, and coordination; do not choose a superficially cheap level that is likely to require more iterations, and release any level as soon as another level becomes the lowest effective choice.
+description: Assess task complexity, recommend the lowest effective Codex reasoning setup—low, medium, high, xhigh, max, or ultra—and automatically apply it for subsequent turns while preserving the currently selected model, including GPT-6 Astra and GPT-5.6 Sol, whenever a supported host or bundled App Server control is available. Use before substantial work, whenever scope or risk changes, when starting or claiming a task, choosing a thinking label, planning an agent run, answering which reasoning level is appropriate, or balancing quality against latency and token usage. Before max or ultra, recommend oracle-review when a slower independent review can receive enough exact context. Treat every level as a phase-scoped lease, release it as soon as a cheaper level becomes effective, and keep max or xhigh only for the shortest necessary decision window.
 ---
 
 # Calibrate Reasoning Effort
@@ -25,14 +25,18 @@ Calibration has three required steps when runtime control is available:
 
 1. Recommend and announce the lowest effective level.
 2. Apply that level immediately for subsequent turns.
-3. At every stable phase boundary or task closure, reassess and immediately
-   apply the newly appropriate level. Treat `max` as the shortest necessary
-   decision lease and release it as soon as that decision window closes.
+3. Before recommending `max` or `ultra`, assess whether `$oracle-review` can
+   receive enough exact context and provide a useful independent pass.
+4. Before the next substantial action after a stable phase boundary, reassess
+   and immediately apply the newly appropriate level. Treat every setting as a
+   phase lease, never as a task or session default. Keep `max` and `xhigh` only
+   for the shortest necessary decision window.
 
-When applying `high`, `xhigh`, or `max`, name the concrete risk or decision
-window that warrants the extra cost and the evidence or phase transition that
-will trigger recalibration. Do this in the same update as the upshift so the
-level has an exit condition from the start.
+For every level, name the current phase and its release trigger. When applying
+`high`, `xhigh`, or `max`, also name the concrete risk or decision window that
+warrants the cost. Do this in the same update as the change. When the trigger
+occurs, apply the lower level before another substantial edit, test, diagnosis,
+or planning step. Do not wait for the task to close or for the user to ask.
 
 Do not stop after writing a recommendation or task label. First prefer a direct
 host/orchestrator effort control. Otherwise, when `CODEX_THREAD_ID` and
@@ -50,6 +54,17 @@ variable appears in the visible tool list. Report the helper's
 report the concise cause and continue at the available setting; never claim the
 active turn changed.
 
+Searching or inspecting the visible tool list is not an application attempt.
+If no direct effort-control tool is callable, invoke the bundled helper
+immediately; do not spend another turn merely reporting a recommendation or
+apparent lack of control. Do not say that the host control is unavailable until
+the helper has actually returned a failure. Keep these status words exact:
+
+- `recommended` means the level was selected but has not been proved active;
+- `applied` means a direct control or the helper returned success for subsequent
+  turns;
+- `unavailable` means every applicable control path was attempted and failed.
+
 The lowest plausible level is often not the lowest effective level. Spending a
 little more reasoning up front is cheaper when a weak first pass would cause
 several edit-test-debug loops or an expensive incorrect decision.
@@ -63,19 +78,34 @@ Apply a reasoning level only for as long as the current task or task phase
 justifies it. The setting is not a sticky session default and must not remain
 elevated merely because an earlier phase was difficult.
 
+Use this hard boundary:
+
+- A lease covers one named reasoning-dependent phase, not an issue, goal,
+  conversation, or implementation project.
+- Recheck the lease after each decisive result that settles ambiguity, fixes an
+  architecture, isolates a reproducer, or provides a deterministic checker.
+- If a cheaper level is now effective, apply it before the next substantial
+  action. A later failure can justify a new lease; possible future difficulty
+  does not justify retaining the old one.
+- Treat a user's concern about token use or latency as an immediate
+  recalibration signal, while still choosing the lowest level that protects
+  correctness.
+
 - Recalibrate at a stable phase boundary when the remaining work materially
   changes shape—for example, after an architecture decision is accepted, a
   safe seam is isolated, an ambiguous failure becomes a deterministic
   reproducer, or a risky implementation becomes mechanical verification.
 - Do not retain a level merely because the next phase belongs to the same task.
   Calibrate the work that remains, not the hardest work already completed.
-- Immediately apply the newly appropriate level for subsequent turns. The new
-  level may be lower or higher; choose by expected total cost, not by momentum.
+- Immediately apply the newly appropriate level for subsequent turns before
+  continuing substantial work. The new level can be lower or higher. Choose by
+  expected total cost, not by momentum.
 - Be increasingly deliberate about releasing expensive levels. In particular,
-  use `max` only for the shortest necessary tightly coupled decision window.
-  Once that decision is settled and the remaining implementation or validation
-  is adequately served by `xhigh`, `high`, `medium`, or `low`, downgrade before
-  continuing substantial work.
+  use `max` only for the shortest necessary tightly coupled architecture or
+  synthesis decision. Once the seam and decisive verification strategy are
+  known, downgrade before implementation or validation unless that next phase
+  independently qualifies for `max`. Apply the same rule to `xhigh` after its
+  compatibility, release, security, or provenance decision is settled.
 - Apply the same rule to every level: keep it while it remains the lowest
   effective choice, then change it when another level becomes more appropriate.
 - Do not oscillate for individual commands or downgrade in the middle of an
@@ -87,6 +117,27 @@ Higher reasoning levels consume more tokens and latency, but token cost alone
 is not a reason to downgrade. Releasing an elevated level too early can create
 more rework than it saves; retaining it after the risk has passed is also
 wasteful.
+
+### Foreground waits and monitoring
+
+Treat a foreground wait as a stable phase boundary when the only remaining
+work is polling or reading a terminal status.
+
+1. Record the level that the substantive task will probably need when work
+   resumes.
+2. Apply `low` before waiting or monitoring. Status polling does not benefit
+   from carrying a more expensive reasoning level.
+3. Keep user updates and the monitoring cadence required by the host; lowering
+   effort must not make the agent abandon the wait.
+4. When the external work finishes or produces a result that needs judgment,
+   recalibrate and apply the lowest effective level for that next phase. Restore
+   the recorded level when the task shape is unchanged; choose a different
+   level when the result changes the risk or ambiguity.
+
+Do not lower merely because one tool call is slow when the agent is still
+reasoning, editing, coordinating, or interpreting partial results concurrently.
+The downgrade is for a genuine wait-only phase. Escalate before diagnosing a
+failure, changing code, or making a consequential completion decision.
 
 ### Required effort-release check
 
@@ -134,11 +185,12 @@ turn.
      in parallel.
 3. Select the level from the table below. Let a severe signal dominate an
    average of many harmless signals; do not use a mechanical point score.
-4. Announce the recommendation before substantial work, usually in one line:
+4. If the candidate is `max` or `ultra`, apply the Oracle-first check below.
+5. Announce the recommendation before substantial work, usually in one line:
 
    `Recommended reasoning: high — dependency invalidation can silently reuse stale work, so the task needs careful invariants and differential tests.`
 
-5. Immediately apply the recommended level for subsequent turns when a runtime
+6. Immediately apply the recommended level for subsequent turns when a runtime
    control is available. This is a required part of using the skill, not an
    optional suggestion. Prefer a direct host or orchestrator reasoning-effort
    control. Otherwise, if `CODEX_THREAD_ID` and `CODEX_HOME` are available, run:
@@ -150,18 +202,48 @@ turn.
    Replace `<skill-dir>` with this skill's directory and `<level>` with the
    selected value. The helper locates and checks the control socket under
    `CODEX_HOME`; do not pre-emptively skip it because a socket-specific
-   environment variable is absent. Do not ask for approval for this scoped
+   environment variable or visible tool is absent. A tool-list search does not
+   satisfy this step. Do not ask for approval for this scoped
    settings update. Treat an `{"applied":true}` result as proof only for
    subsequent turns. If no supported control is available, say the
    recommendation was not applied and continue with the current setting. For a
    direct Codex TUI without a control socket, recommend launching future
    sessions with `codex-controlled`; do not start a second App Server beside
    the active embedded session.
-6. Proceed without asking for approval unless another instruction requires a
+7. Proceed without asking for approval unless another instruction requires a
    pause. If the repository uses `thinking:*` task labels, apply the matching
    label.
-7. Recalibrate only when evidence changes the task shape. Do not oscillate
+8. Recalibrate only when evidence changes the task shape. Do not oscillate
    between levels for individual commands inside one stable task.
+
+## Check Oracle before max or ultra
+
+Before recommending local `max` or `ultra`, recommend `$oracle-review` first
+when all these conditions hold:
+
+- the decision benefits from a slower independent planning or review pass;
+- exact repository sources, current evidence, constraints, and the decision
+  question can be packaged without hiding decisive private or live state;
+- waiting for the response does not create a larger operational risk; and
+- the driving agent can reconcile the advisory answer against current local
+  evidence before implementation or acceptance.
+
+Oracle is especially useful for architecture synthesis, compatibility and
+migration choices, critical result review, conflicting evidence, and work that
+does not converge. State why Oracle is useful and identify the exact decision
+or artifact it will review. Use the canonical `$oracle-review` skill. Do not
+invent a manual browser or transcript workflow.
+
+Recommend local `max` first when the hard part depends on immediate compiler or
+test feedback, fast repository-local inspection, confidential state that cannot
+be packaged safely, an active incident, or another condition that makes an
+external review incomplete or too slow. Use `ultra` only when real independent
+local workstreams also justify subagents. Oracle is an independent reviewer,
+not a substitute name for `ultra`.
+
+If Oracle is selected, use the lowest effective local level to prepare exact
+context and continue independent work. Recalibrate when the response arrives.
+Oracle advice remains advisory and does not accept a plan, change, or effect.
 
 ## Select a level
 
@@ -171,15 +253,17 @@ turn.
 | `medium` | The task is a bounded implementation or CI/tooling change using known patterns, but needs coordinated edits or a focused test. | Routine CI wiring, a small API addition, a straightforward bug with a reproducer. |
 | `high` | Correctness depends on complex debugging, multi-component behavior, performance, dependencies, concurrency, lifecycle, or several validation layers. The seam is still bounded. | Dependency graph observation, process cleanup, compiler lowering, cache-key design without reuse. |
 | `xhigh` | Architecture, compatibility, release, security, provenance, or broad semantic decisions could produce believable wrong behavior or unsafe state. Require a deliberate second pass. | Semantic cache reuse, security boundaries, data migration, broad compatibility or release gates. |
-| `max` | This is among the hardest tightly coupled single-agent reasoning work, where a wrong design would be very expensive and cannot be safely split. | Selecting a compiler-wide semantic boundary, changing 1.0 evidence policy, high-impact provenance strategy. |
-| `ultra` | The task genuinely benefits from coordinated parallel agents with meaningful independent workstreams that can later be synthesized. | A cross-repository compatibility audit with independent target reviews, or research plus isolated implementation and validation streams. |
+| `max` | Oracle was unsuitable or insufficient, and this is among the hardest tightly coupled single-agent reasoning work. A wrong design would be very expensive and cannot be safely split. | Selecting a compiler-wide semantic boundary that depends on immediate local feedback, changing 1.0 evidence policy, high-impact provenance strategy. |
+| `ultra` | Oracle was unsuitable or insufficient, and the task genuinely benefits from coordinated parallel agents with meaningful independent workstreams that can later be synthesized. | A cross-repository compatibility audit with independent target reviews, or research plus isolated implementation and validation streams. |
 
-These six levels describe GPT-5.6 Sol reasoning setups. When it is available,
-prefer GPT-5.6 Sol for this workflow. `max` increases
-single-agent reasoning. `ultra` uses subagents and should be selected only when
-parallel work has clear ownership and reduces total wall-clock or review risk.
-If subagents are unavailable or the task cannot be split safely, choose the
-appropriate single-agent level instead of calling the task ultra.
+These six levels calibrate the model that is already selected. They support
+GPT-6 Astra, GPT-5.6 Sol, and other host-supported reasoning models. Never
+select, prefer, or migrate to a different model as part of calibration; change
+only the reasoning effort. `max` increases single-agent reasoning. `ultra` uses
+subagents and should be selected only when parallel work has clear ownership
+and reduces total wall-clock or review risk. If subagents are unavailable or
+the task cannot be split safely, choose the appropriate single-agent level
+instead of calling the task ultra.
 
 ## Recommend versus apply
 
@@ -216,8 +300,9 @@ Server per `CODEX_HOME` and launches the TUI against it. Multiple TUI instances
 may share that server safely because the helper updates only the thread named by
 the calling process's `CODEX_THREAD_ID`.
 
-When an orchestrator explicitly supports selecting model and reasoning effort
-for a new turn or agent, use that control only within the user's authority.
+When an orchestrator exposes both model and reasoning controls for a new turn
+or agent, preserve the selected model and set only reasoning effort. Do not
+populate or change a model field as a side effect of calibration.
 Report one of these outcomes after the recommendation:
 
 - `Applied reasoning for subsequent turns: <level>.`
@@ -245,8 +330,9 @@ cost rather than diff size or prestige:
 | --- | --- | --- |
 | Change one authorization condition in a tiny file. | `xhigh`, single-agent | The diff is tiny, but a plausible mistake crosses a security boundary and deserves a second pass. |
 | Apply a huge generated rename with an exact deterministic checker and cheap rollback. | `low`, single-agent | File count is large, but reasoning is mechanical and decisive verification is cheap. |
-| Resolve one tightly coupled compiler architecture decision through sequential investigation and validation. | `max`, single-agent | The work is difficult, but parallel agents would add coordination without independent ownership. |
-| Audit four independent target integrations, then synthesize compatibility evidence. | `ultra`, multi-agent | Independent workstreams can run concurrently and materially reduce elapsed time and review risk. |
+| Review a packageable cross-system architecture decision with stable evidence. | `$oracle-review`, then recalibrate | A slower independent pass can challenge the design before an expensive local lease. |
+| Resolve one tightly coupled compiler architecture decision through immediate compile feedback that Oracle cannot observe. | `max`, single-agent | The work is difficult, local evidence changes quickly, and parallel agents would add coordination without independent ownership. |
+| Audit four independent target integrations after Oracle cannot receive decisive private evidence. | `ultra`, multi-agent | Independent local workstreams can run concurrently and materially reduce elapsed time and review risk. |
 
 If a supposedly mechanical rewrite lacks a decisive checker, raise it to
 `medium`. If the independent streams cannot be cleanly owned and synthesized,
