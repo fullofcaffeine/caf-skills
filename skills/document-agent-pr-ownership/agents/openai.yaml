@@ -1,0 +1,4 @@
+interface:
+  display_name: "Document Agent PR Ownership"
+  short_description: "Record clear ownership for agent-created PRs"
+  default_prompt: "Use $document-agent-pr-ownership to document who created this PR, why they were involved, and who owns the remaining work."
