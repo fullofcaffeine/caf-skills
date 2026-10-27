@@ -1,12 +1,17 @@
 ---
 name: author-voxel-assets
-description: Design, create, convert, review, and integrate voxel models such as MagicaVoxel `.vox` assets. Use when Codex must replace a flat world sprite with a real volume, author a voxel prop or character, preserve a 2D icon as reference or fallback, add deterministic model generation, improve voxel silhouettes or palettes, plan voxel animation, or review voxel provenance and runtime integration.
+description: "Design, create, convert, review, and integrate voxel models such as MagicaVoxel `.vox` assets. Use when Codex must replace a flat world sprite with a real volume, author a voxel prop or character, preserve a 2D icon as reference or fallback, add deterministic model generation, improve voxel silhouettes or palettes, plan voxel animation, or review voxel provenance and runtime integration."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f0a78dc5086808eef05de68485f72799f8f6a581a9dbe32a6b537d079214169. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:f08bd2abcbe72f58d5eeb2736ef7911e8dda6139efcac66c0c2acf73284b4fda -->
 
 # Author voxel assets
 
 Create a real volume that reads well during play. Do not treat voxel work as a
 mechanical conversion of every source pixel into a cube.
+
+## Author voxel assets as real volumes
 
 ## Establish the contract
 
@@ -102,3 +107,21 @@ State what is deterministic. For example:
 - Runtime result: reviewed in the real renderer.
 
 Do not describe LLM-assisted authorship as deterministic regeneration.
+
+Reason: Voxel work fails when it mechanically converts pixels to cubes; a stated contract for format, scale, pivot, and loader keeps the asset correct in the runtime.
+
+Examples:
+- A flat world sprite needs a 3D replacement. Establish the model format, pivot, and bounds first, then design the silhouette instead of extruding every pixel.
+- A review checks a MagicaVoxel asset. Compare palette, scale, and provenance against the repository contract before suggesting edits.
+
+Limits:
+- Do not change the runtime loader or coordinate system without the owning code and tests.
+- Do not convert every source pixel into a cube by default.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.
+
+## Included assets
+
+These files are part of the exact package closure. Inclusion does not permit helper execution.
+
+- `references/animation.md` — reference; none

@@ -1,13 +1,18 @@
 ---
 name: explain-technical-work
-description: Make specialized explanations understandable to capable newcomers without losing precision. Prefer familiar everyday language, avoid unnecessary technical or organization-specific jargon, and explain any exact specialist term that must remain. Use whenever Codex drafts, rewrites, or reviews material about a complex domain—including pull requests, engineering changes, research, data analysis, operations, security, policy, incidents, decisions, procedures, status reports, handoffs, documentation, or user guidance—that may assume missing project history, obscure why the work started, or leave practical value unclear.
+description: "Make specialized explanations understandable to capable newcomers without losing precision. Prefer familiar everyday language, avoid unnecessary technical or organization-specific jargon, and explain any exact specialist term that must remain. Use whenever Codex drafts, rewrites, or reviews material about a complex domain—including pull requests, engineering changes, research, data analysis, operations, security, policy, incidents, decisions, procedures, status reports, handoffs, documentation, or user guidance—that may assume missing project history, obscure why the work started, or leave practical value unclear."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:b4d83ab9a4b3225cb2e76392c6bacc0d0133fa77ad1a892959be65898e2547a8. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:b721f7764455f0bed0ad00853e3bd04dc29003b0afd10977137a7747ec9cc8b5 -->
 
 # Explain Technical Work
 
 Write so a reader can understand the practical problem and outcome before they need specialized or organization-specific knowledge. Preserve the full truth; improve the order and explanation of that truth.
 
 Apply the method to the terms actually used in the current work. Do not carry a fixed glossary, a list of forbidden words, or assumptions from one project or field into another. Terms and examples in this skill illustrate the method; they are not special cases that define its scope.
+
+## Explain technical work for capable newcomers
 
 ## Use Simple English for the wording pass
 
@@ -335,3 +340,21 @@ Do not confuse newcomer-friendly language with simplification that changes the c
 - assume that a familiar-looking word is universally understood.
 
 For cross-domain rewrite examples, read [references/examples.md](references/examples.md).
+
+Reason: Readers act correctly sooner when the practical problem and result come before specialist or organization-specific terms.
+
+Examples:
+- A pull request description starts with internal module names. Lead with the user-visible problem and outcome, then name the modules and define each term once.
+- An incident report assumes project history. Add the missing context a newcomer needs before the timeline.
+
+Limits:
+- Do not apply a fixed glossary from one project to another.
+- Do not remove required precision, evidence, or uncertainty to make text shorter.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.
+
+## Included assets
+
+These files are part of the exact package closure. Inclusion does not permit helper execution.
+
+- `references/examples.md` — reference; none

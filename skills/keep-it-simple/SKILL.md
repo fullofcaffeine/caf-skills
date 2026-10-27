@@ -1,7 +1,10 @@
 ---
 name: keep-it-simple
-description: Find the clearest complete design with the least accidental complexity while preserving the full goal, production quality, safety, correctness, maintainability, developer experience, and evidence. Use when work adds safeguards, schemas, modules, abstractions, wrappers, adapters, planners, workflows, skills, retries, compatibility paths, state, configuration, or tests; when similar work may already exist in the current repository, history, tracker, sibling project, dependency, or upstream; when considering cross-project extraction or consolidation; when a solution feels complicated or overengineered; or when the user asks for KISS, elegance, simplicity, less code, fewer layers, no duplication, or "as simple as possible, but not simpler." Never use this skill to cut scope, quality, or proof merely to reduce effort.
+description: "Find the clearest complete design with the least accidental complexity while preserving the full goal, production quality, safety, correctness, maintainability, developer experience, and evidence. Use when work adds safeguards, schemas, modules, abstractions, wrappers, adapters, planners, workflows, skills, retries, compatibility paths, state, configuration, or tests; when similar work may already exist in the current repository, history, tracker, sibling project, dependency, or upstream; when considering cross-project extraction or consolidation; when a solution feels complicated or overengineered; or when the user asks for KISS, elegance, simplicity, less code, fewer layers, no duplication, or \"as simple as possible, but not simpler.\" Never use this skill to cut scope, quality, or proof merely to reduce effort."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:0cb842dee1a0b28cef6bb613cce4b52673b592850f184c47e5a7e3546e0652d0. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:104701101d96c8ef328dff2b0d34b33b4b98f8e11ffd983affab8a54bfbe6a9c -->
 
 # Keep It Simple
 
@@ -14,6 +17,8 @@ protects a real requirement. The full goal includes the user's stated vision,
 production quality, safety, correctness, maintainability, developer experience,
 and proportionate evidence. A credible near-term need can justify work now when
 doing it later would create a worse boundary or substantial rework.
+
+## Choose the clearest complete design
 
 ## Use the simplicity test
 
@@ -117,3 +122,15 @@ explicit quality.
 Do not multiply fixtures, retries, abstractions, or recovery modes after the
 acceptance evidence is sufficient. Treat ungrounded generalization as follow-up
 work. A new requirement or failure can reopen the design with new evidence.
+
+Reason: Simplicity means few concepts and clear ownership; cutting scope or proof only moves complexity to later.
+
+Examples:
+- A change adds a wrapper that only forwards calls. Remove the wrapper and call the owner directly.
+- Similar code exists in a sibling project. Reuse or extract it with a clear owner instead of copying it.
+
+Limits:
+- Do not cut scope, quality, safety, or proof merely to reduce effort.
+- Do not remove purposeful complexity that protects a real requirement.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.

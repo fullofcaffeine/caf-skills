@@ -1,7 +1,10 @@
 ---
 name: wait-for-completion
-description: Wait for background builds, tests, reviews, or jobs without repeated model-driven status checks. Use when starting background work, choosing how to await completion, or resuming from a completion notification.
+description: "Wait for background builds, tests, reviews, or jobs without repeated model-driven status checks. Use when starting background work, choosing how to await completion, or resuming from a completion notification."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:d0449d6b3b7fccc5ba5c04ee89513a0724d8f0674638eb4e1cada48ce4c149d6. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:a40101bacb205af84641bbb506e4717a4529c4ba94bb8ba7396dcc45f794e6a6 -->
 
 # Wait for completion
 
@@ -28,6 +31,8 @@ repeated polling efficient.
   a job just because a wait timed out. Respect host responsiveness limits.
 - When only waiting, request low effort through available controls. Recalibrate
   before substantive diagnosis or edits. Never change the selected model.
+
+## Wait passively for background completion
 
 ## Codex capability routing
 
@@ -62,3 +67,15 @@ This shared skill is native guidance, not an installed scheduler or proof of
 enforcement. Caf package admission and digest-pinned selection are separate
 from native skill installation. Do not fabricate them or require Caf tooling
 when the host already offers an honest passive wait.
+
+Reason: Polling spends tokens without speeding the work; a recorded handle and a verified wake resume the owner when the result exists.
+
+Examples:
+- A full test gate runs for several minutes. Record the run handle and evidence path, yield through the host notification, and read the result once on wake.
+- The host has no completion notification. Report that limitation and use one bounded check with a stated reason.
+
+Limits:
+- Do not create a polling daemon or a sleep-and-check loop.
+- Do not treat a timer expiry as completion evidence.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.

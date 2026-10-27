@@ -1,0 +1,4 @@
+interface:
+  display_name: "Caf work loop"
+  short_description: "Keep the backlog moving safely"
+  default_prompt: "Use $caf-work-loop to take the next eligible task, verify it, and park owner decisions."

@@ -1,26 +1,18 @@
 ---
 name: simple-english
-version: 1.2.0
-description: |
-  Write or rewrite technical text with the rules of ASD-STE100 Simplified
-  Technical English so it is clear, unambiguous, and free of AI slop. Use for
-  documentation, READMEs, runbooks, procedures, error messages, release notes,
-  incident reports, and API guides. Also use when the user says "STE",
-  "Simplified Technical English", "ASD-STE100", "de-slop", "make this
-  readable", "write for non-native readers", or asks for docs that translate
-  well. Enforces the standard's 53 rules: 20/25-word sentence limits, one word
-  one meaning, simple tenses, active voice, condition before command.
-license: MIT
-compatibility: claude-code cursor codex gemini-cli opencode
-metadata:
-  standard: ASD-STE100 Issue 9 (2025-01-15)
+description: "Write or rewrite technical text with the rules of ASD-STE100 Simplified Technical English so it is clear, unambiguous, and free of AI slop. Use for documentation, READMEs, runbooks, procedures, error messages, release notes, incident reports, and API guides. Also use when the user says \"STE\", \"Simplified Technical English\", \"ASD-STE100\", \"de-slop\", \"make this readable\", \"write for non-native readers\", or asks for docs that translate well. Enforces the standard's 53 rules: 20/25-word sentence limits, one word one meaning, simple tenses, active voice, condition before command."
+license: "MIT"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f2826fadcbc9fe03d2e5f27921ac83b26dcc40f129d7e294defdef6704acc67. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:7f0598d37476a5b829e923afe4a372f594538d555f2ab179f5a1aa9e84a69871 -->
 
 # Simple English: Write Like an Aerospace Manual
 
 Write technical text with the rules of ASD-STE100 Simplified Technical English. STE is the controlled language that aerospace and defense manufacturers use for maintenance documentation. The rules exist so that a tired reader who is not a native English speaker cannot misread an instruction. They remove the usual signs of AI-generated text as a side effect: long sentences, synonym rotation, hedges, filler, and decorative clauses.
 
 Write for that tired reader. Each sentence must survive one read.
+
+## Apply the Simple English method
 
 ## Your Task
 
@@ -337,3 +329,23 @@ This skill is an unofficial aid. It is not affiliated with or endorsed by ASD or
 
 - `references/checklist.md` — full verification pass with searchable patterns, for check mode and final audits
 - `references/use-cases.md` — long-form adaptations: error messages, runbooks, incident reports, commits, UI copy, i18n
+
+Reason: A controlled language removes ambiguity, so a tired reader who is not a native English speaker understands each sentence on the first read.
+
+Examples:
+- A README section mixes setup steps and explanation. Classify each passage, write the steps as one imperative instruction per sentence within 20 words, and keep explanations within 25 words.
+- A user asks to check an error message. Report each violation with the exact rule number from this skill, the offending text, and a compliant rewrite.
+
+Limits:
+- Do not apply the rules to marketing copy, blog voice, or brand writing.
+- Do not change code, identifiers, commands, paths, or quoted errors.
+- Do not claim official ASD-STE100 compliance; the official dictionary is required for that.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.
+
+## Included assets
+
+These files are part of the exact package closure. Inclusion does not permit helper execution.
+
+- `references/checklist.md` — reference; none
+- `references/use-cases.md` — reference; none

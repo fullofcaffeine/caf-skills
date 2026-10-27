@@ -1,13 +1,18 @@
 ---
 name: beads
-description: Use Beads (`bd`) safely for durable issue tracking, dependencies, blockers, handoff, shared memory, and cross-agent shared-library coordination. Trigger in any repository containing `.beads`, when asked to find, claim, create, update, close, migrate, synchronize, or recover Beads work, when an important change affects a reusable library with several consumers, or when Beads reports a client/database schema mismatch. Prefer repository pins or wrappers and always perform a read-only compatibility preflight before writes.
+description: "Use Beads (`bd`) safely for durable issue tracking, dependencies, blockers, handoff, shared memory, and cross-agent shared-library coordination. Trigger in any repository containing `.beads`, when asked to find, claim, create, update, close, migrate, synchronize, or recover Beads work, when an important change affects a reusable library with several consumers, or when Beads reports a client/database schema mismatch. Prefer repository pins or wrappers and always perform a read-only compatibility preflight before writes."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:48ebef3a4d17c58a36728d8125508b4a6db55d46863e05d8b74b072a5b662d1f. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:8cdb0428b726bbc028d8116638d86393734d5a0f368059f27f8758cbcf64fe5d -->
 
 # Beads
 
 Use Beads as the durable source of truth for work that must survive an agent or
 session. Use the repository's reviewed wrapper or `bd-toolchain` pin. Never let
 shell `PATH` order decide which database client opens shared issue data.
+
+## Use Beads as the durable task record
 
 ## Identify the target first
 
@@ -239,3 +244,15 @@ Follow `bd prime` at completion. Update or close only the issue that the agent
 owns. Append the shared-library channel outcome when another consumer needs the
 result. Run required gates, inspect Git status, and report unsynchronized work.
 Supporting documents and local plans do not replace the Beads lifecycle record.
+
+Reason: Task data shared by several agents must not depend on shell PATH order or the caller's directory, so every command names its client and target.
+
+Examples:
+- A session ends with open work. Record status and the next action in the existing issue before stopping.
+- An agent works in a second repository. Run bd -C with that repository's path instead of relying on the current directory.
+
+Limits:
+- Do not copy task state into Markdown plans or memory files.
+- Do not let shell PATH order choose the Beads client.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.

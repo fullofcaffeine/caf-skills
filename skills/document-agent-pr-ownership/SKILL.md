@@ -1,13 +1,18 @@
 ---
 name: document-agent-pr-ownership
-description: Record clear, public ownership and provenance whenever an AI agent creates, updates, hands off, or takes over a pull request. Use when opening or substantially revising a PR, when work was prepared by a named third-party agent, when several agents share a repository, or when a reviewer needs to know why a different agent created the branch and who should finish it.
+description: "Record clear, public ownership and provenance whenever an AI agent creates, updates, hands off, or takes over a pull request. Use when opening or substantially revising a PR, when work was prepared by a named third-party agent, when several agents share a repository, or when a reviewer needs to know why a different agent created the branch and who should finish it."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:fd2a68aac164cacc11b8d0b927dfe2f129f2cdaf2c7b138345d075aa0e38688f. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:6c6b670fb81e6f628fcf14f8e170d2094ac01ee8826c6eef88dd2636485d5c7c -->
 
 # Document Agent PR Ownership
 
 Make agent involvement understandable without requiring private conversation
 history. Agent attribution supplements the technical PR explanation; it never
 replaces the problem, user value, design, examples, or verification evidence.
+
+## Record agent provenance in pull requests
 
 ## Creating a PR
 
@@ -55,3 +60,15 @@ is unclear and overlapping edits would be risky.
 Agent provenance is coordination metadata, not evidence that the PR is sound.
 The normal exact-head review, CI, documentation, security, and merge rules still
 apply.
+
+Reason: Reviewers need to know which agent prepared the work, why, and who finishes it, without that attribution replacing the technical explanation.
+
+Examples:
+- A different agent takes over a branch. Update the provenance section to record the handoff and the new owner.
+- An agent opens a pull request. Add a short Agent provenance section naming the agent, why it was involved, and the owner who finishes the work.
+
+Limits:
+- Do not include private transcripts or hidden reasoning.
+- Do not let attribution replace the problem, user value, design, examples, or verification evidence.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.

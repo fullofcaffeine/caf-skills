@@ -1,13 +1,18 @@
 ---
 name: confirm-work-still-needed
-description: Verify that a tracked task, bug, roadmap item, audit finding, pull request, shared-library proposal, or suggested next priority is unresolved and available before recommending, claiming, planning, or implementing it. Use with Beads, GitHub Issues, Linear, TODO lists, audits, Oracle reviews, release reports, open PR queues, older handoffs, and reusable dependencies where another consumer or agent can already own overlapping work.
+description: "Verify that a tracked task, bug, roadmap item, audit finding, pull request, shared-library proposal, or suggested next priority is unresolved and available before recommending, claiming, planning, or implementing it. Use with Beads, GitHub Issues, Linear, TODO lists, audits, Oracle reviews, release reports, open PR queues, older handoffs, and reusable dependencies where another consumer or agent can already own overlapping work."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f9fd1d161db8d2e453f5ee16e3836799cd07c19437ef02c78566eda8e13a4db7. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:1836fb439d9c7a94acceb790aa0b98f0fff74a9316ff5b8aef5cda95dfd27d2c -->
 
 # Confirm Work Still Needed
 
 Treat an open tracker item as a lead, not proof that implementation is missing.
 Confirm the gap against current source, history, tests, remote review state, and
 shared-library coordination records before creating a branch or recommendation.
+
+## Confirm the work is still needed before claiming it
 
 ## Verification workflow
 
@@ -148,3 +153,15 @@ Action: <claim | update | close | coordinate | experiment>
 If the tracker or coordination entry is stale, state that fact and identify the
 current evidence. Do not blame the tracker or channel for a verification step
 that an agent skipped.
+
+Reason: An open tracker item is only a lead; current source, history, tests, reviews, and coordination records decide whether work remains.
+
+Examples:
+- A shared library has an overlapping proposal. Link or update the existing owner's work instead of starting a duplicate.
+- An old bug is open. Reproduce it against current source and check recent history and open pull requests before creating a branch.
+
+Limits:
+- Do not scan unrelated repositories without a freshness reason.
+- Do not treat an open issue or old failure as proof that work is missing.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.

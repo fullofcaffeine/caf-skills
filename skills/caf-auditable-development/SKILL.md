@@ -1,6 +1,7 @@
 ---
 name: caf-auditable-development
 description: "Use when agent development needs an audit trail, reproducible steps, handoff or recovery, bounded multi-agent coordination, or crystallizing repeated useful work into the right existing CML building block. Recognize the need from chat; inspect and suggest the proper owner and type without requiring the user to name it. Skills are one possible form for reusable agent guidance. Keep ordinary read-only questions and small fixes proportional."
+license: "LicenseRef-Cafetera-Private-Unpublished"
 ---
 
 <!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:a2c1559e5d1ee23a5c3f5399d7c97e21e3b6d01db95c0e68ff395f3961d21739. Selection digest: sha256:60e9d8e5a4b505efb6e6bc23de309e771ed0055284df8913d60b8ee668ebd0db. Effective AgentSpec digest: sha256:3667b73c82a73460c3c893b094dfedb99afeea662ec0fb6530eadaea906198bd -->

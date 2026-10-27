@@ -1,9 +1,16 @@
 ---
-name: "git-history-scrub-safe"
+name: git-history-scrub-safe
 description: "Safely remove sensitive strings or path leaks from Git history with verified backups, isolated mirror rewrite, integrity checks, rollback, and protected-branch-aware push strategy. Use when any tracked or historical commit contains secrets, machine-local paths, tokens, or private identifiers that must be scrubbed."
+license: "Apache-2.0"
 ---
 
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:1fd08bd046ef6ca443b4dd58df172d7a8aa033ba9033d9f7b9498faea29e1a04. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:1d951ecd9dfa67e3066b6176ff8d710cc21518c17c03f35dcbea174fc5e9e81f -->
+
 # Git History Scrub Safety
+
+Remove sensitive strings from Git history without irreversible damage, by treating the rewrite as a production migration.
+
+## Scrub Git history with verified backups
 
 ## Overview
 Use this workflow to scrub sensitive content from Git history without risking irreversible repo damage.
@@ -110,3 +117,22 @@ If anything goes wrong, restore from bundle via mirror:
 ## Resources
 - Use `references/runbook.md` as the execution checklist.
 - Use `references/prompt-template.md` to run this workflow in another repo.
+
+Reason: History rewrites are destructive; backups, an isolated mirror, verification, and staged promotion make the change recoverable.
+
+Examples:
+- A machine-local path leaked into history. Inventory every occurrence before choosing the rewrite tool.
+- A token was committed months ago. Back up twice, rewrite in an isolated mirror, verify, publish to main_scrubbed, and promote only after validation.
+
+Limits:
+- Do not force-push without explicit owner approval and branch-protection awareness.
+- Do not rewrite main in place before the scrub is proven.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.
+
+## Included assets
+
+These files are part of the exact package closure. Inclusion does not permit helper execution.
+
+- `references/prompt-template.md` — reference; none
+- `references/runbook.md` — reference; none
