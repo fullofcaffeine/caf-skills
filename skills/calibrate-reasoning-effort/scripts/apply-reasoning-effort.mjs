@@ -198,6 +198,7 @@ function handleText(text) {
     sendJson({
       id: 2,
       method: "thread/settings/update",
+      // Preserve the thread's selected model. Calibration changes effort only.
       params: { threadId, effort },
     });
   } else if (message.id === 2) {

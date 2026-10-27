@@ -9,6 +9,30 @@ Write so a reader can understand the practical problem and outcome before they n
 
 Apply the method to the terms actually used in the current work. Do not carry a fixed glossary, a list of forbidden words, or assumptions from one project or field into another. Terms and examples in this skill illustrate the method; they are not special cases that define its scope.
 
+## Use Simple English for the wording pass
+
+Load and consult the installed `simple-english` skill before drafting. Use this
+skill to determine the truth, structure, and evidence first. Use
+`simple-english` while drafting each passage and during the final audit. The
+sentence rules guide the written explanation; they do not constrain private
+analysis or change the technical facts. Apply the skills in this order:
+
+1. Establish the practical outcome, causal chain, mental model, examples,
+   exact names, evidence, and limitations with this skill.
+2. Rewrite the technical prose with `simple-english` in pragmatic mode by
+   default. Use strict mode when the user requests STE, ASD-STE100,
+   compliance, or translation preparation.
+3. Run the `simple-english` self-check for sentence limits, consistent terms,
+   active and simple verb forms, conditions before commands, and one meaning
+   per word.
+4. Keep important limitations and technical precision when a Simple English
+   rule would hide or change them. Leave code, identifiers, commands, paths,
+   API names, and quoted errors unchanged.
+
+Do not apply controlled-language rules to code or other exact technical text.
+Use the broader explanation workflow when the task needs reasoning that a
+shorter or more controlled sentence cannot preserve.
+
 ## Plain language is the default
 
 Do not make the reader learn internal vocabulary when familiar words can state
@@ -87,7 +111,36 @@ starting state or input -> action, decision, or transformation -> observable res
 
 For a hierarchy, comparison, causal claim, or lifecycle, use the corresponding small mental model instead of forcing everything into a pipeline. Name the formal concept or owning component only after explaining what it does. Use a small example when prose alone would leave the reader guessing.
 
-### 4. State the positive operational contract
+### 4. Explain concrete things before technical labels
+
+When a reader asks what a term means, begin one layer earlier than the term.
+Show the ordinary input, action, value, file, message, or output that exists in
+the real workflow. Then state:
+
+1. what concrete thing the term names—a value, field, function call, file,
+   record, process, transformation, or rule;
+2. who creates it, who reads or changes it, and when;
+3. one small example of its exact form;
+4. what practical result follows from it.
+
+Never define an unfamiliar term mainly with other unfamiliar terms. A sentence
+such as “the provenance marker authorizes the carrier rewrite” is not an
+explanation until the reader has seen what the marker physically is, which
+code creates it, what bytes or code are changed, and what can go wrong. Define
+each prerequisite concept first or replace the sentence with ordinary verbs.
+
+For a transformation—such as a rewrite, lowering, migration, projection, or
+normalization—show a concrete before and after. State what must remain the same
+and what intentionally changes. For a trust or proof claim, also show who or
+what could imitate, copy, bypass, or invalidate the supposed evidence and one
+concrete failure that would result.
+
+Run a zero-context dependency check: every noun needed to understand a
+sentence must either be ordinary language or have already been explained. If
+explaining term A requires term B, explain B first. Do not make the reader ask
+for the definitions in reverse order.
+
+### 5. State the positive operational contract
 
 When explaining a mechanism, rule, annotation, flag, permission, API, policy,
 compiler feature, or relationship, do not lead with a list of things it does
@@ -133,7 +186,7 @@ The letters are relationship placeholders, not a required writing template.
 If the reader still cannot say “who can now do what, to which thing, when, and
 with what consequence,” the explanation is incomplete.
 
-### 5. Audit terminology
+### 6. Audit terminology
 
 Treat a term as jargon when a newcomer could reasonably assign it a different meaning. This includes:
 
@@ -157,7 +210,7 @@ familiar alternative when it preserves the meaning. When the exact term must
 carry the argument, define it at first use and retain it where readers need it
 for search, implementation, review, or further study.
 
-### 6. Replace compressed labels with actions
+### 7. Replace compressed labels with actions
 
 When a dense label compresses several actions, unpack it into an ordered sequence of verbs. For example, a phrase such as “version-checked coordinated update” might mean:
 
@@ -168,7 +221,7 @@ When a dense label compresses several actions, unpack it into an ordered sequenc
 
 After explaining the sequence, introduce the formal or local name if it helps later discussion. Do not treat this example's wording as a preferred vocabulary for unrelated domains.
 
-### 7. Show before, problem, and after
+### 8. Show before, problem, and after
 
 Use the most concrete evidence available:
 
@@ -180,7 +233,7 @@ When output was never produced, say so and show the real failure boundary. Never
 
 Explain observable consequences in the vocabulary of the current domain—for example ordering, uncertainty, retries, identity, permissions, data loss, latency, compatibility, cost, safety, or failure handling. Do not substitute an inventory of internal names for the practical result.
 
-### 8. Layer detail instead of removing it
+### 9. Layer detail instead of removing it
 
 Use this order:
 
@@ -193,13 +246,13 @@ Use this order:
 
 Keep exact identifiers, formulas, classifications, and source names when they support searchability, reproduction, implementation, or review. Introduce them after the reader knows why they matter.
 
-### 9. Add useful references
+### 10. Add useful references
 
 Link directly to the best next source: a primary study, dataset, standard, policy, public documentation, source contract, decision record, focused test, benchmark method, or incident record. Describe what each link helps the reader understand.
 
 Do not use a pile of links as a substitute for explanation. Prefer primary sources for claims about behavior.
 
-### 10. Run the first-read check
+### 11. Run the first-read check
 
 Before publishing, verify:
 
@@ -207,6 +260,14 @@ Before publishing, verify:
 - Can the reader state what caused this work to start and how it improves a
   real workflow, rather than merely naming the internal mechanism?
 - Is every specialized or overloaded term defined before it carries the argument?
+- Does every important term name a concrete thing, actor, or transformation
+  the reader has already seen in an example?
+- For every rewrite or similar transformation, does the explanation show the
+  actual before and after and state what must remain unchanged?
+- For every trust or proof claim, does it say what could imitate, bypass, or
+  invalidate the evidence and show the resulting failure?
+- Does every sentence pass the zero-context dependency check, without defining
+  unfamiliar terms through other unexplained terms?
 - Could any specialized term be replaced with familiar wording without losing
   meaning, and has every term that remains been explained at first use?
 - For every important mechanism, can the reader identify the actor, target,
