@@ -6,6 +6,7 @@ fixture_root=$(mktemp -d)
 trap 'rm -rf "$fixture_root"' EXIT
 
 export CODEX_HOME="$fixture_root/codex"
+export CLAUDE_CONFIG_DIR="$fixture_root/claude"
 "$repo_root/scripts/install.sh"
 "$repo_root/scripts/install.sh"
 
@@ -20,12 +21,23 @@ done
 [[ $(readlink "$CODEX_HOME/skills/README.md") == "$repo_root/skills/README.md" ]]
 [[ ! -e "$CODEX_HOME/skills/oracle-review" ]]
 
+for source in "$repo_root"/claude-code/*; do
+  [[ -f "$source/SKILL.md" ]] || continue
+  destination="$CLAUDE_CONFIG_DIR/skills/$(basename "$source")"
+  [[ -L "$destination" ]]
+  [[ $(readlink "$destination") == "$source" ]]
+done
+[[ ! -e "$CLAUDE_CONFIG_DIR/skills/README.md" ]]
+
 echo "caf-skills installer fixture passed"
 
 export CODEX_HOME="$fixture_root/selective"
+export CLAUDE_CONFIG_DIR="$fixture_root/selective-claude"
 "$repo_root/scripts/install.sh" --skill wait-for-completion
 "$repo_root/scripts/install.sh" --skill wait-for-completion
 [[ -L "$CODEX_HOME/skills/wait-for-completion" ]]
+[[ -L "$CLAUDE_CONFIG_DIR/skills/wait-for-completion" ]]
+[[ ! -e "$CLAUDE_CONFIG_DIR/skills/simple-english" ]]
 [[ ! -e "$CODEX_HOME/skills/README.md" ]]
 [[ ! -e "$CODEX_HOME/skills/calibrate-reasoning-effort" ]]
 if "$repo_root/scripts/install.sh" --skill ../escape; then

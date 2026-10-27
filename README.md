@@ -8,7 +8,15 @@ Reusable Codex skills and personal global agent guidance maintained by
 - `AGENTS.md` contains optional global working rules, including shared Haxe 4
   authoring, boundary, generated-output, testing, and documentation practices.
 - `skills/` contains independently loadable Codex skills.
+- `claude-code/` and `pi/` contain the same skills for Claude Code and Pi.
 - `skills/README.md` documents the installed skill registry and source owners.
+
+Most skills are generated. Their instructions are authored once as CML in the
+Cafetera repository (`caf/skills/library/`) and exported here with
+`CAF_SKILLS_PUBLISH_ROOT=<this clone> haxe tools/skills/skill-library.hxml`.
+Edit the CML, not a generated `SKILL.md`; each generated file says so in its
+header. `calibrate-reasoning-effort`, `show-me-your-work`, and
+`frontend-design` are still maintained here by hand.
 
 The `oracle-review` skill is intentionally owned by the caf-oracle repository,
 next to the CLI, ledger, and browser lifecycle it documents. caf-skills does
@@ -25,7 +33,8 @@ pre-commit install
 ```
 
 The installer links every caf-skills-owned skill and the registry README into
-`${CODEX_HOME:-$HOME/.codex}/skills`. It refuses to replace an existing path it
+`${CODEX_HOME:-$HOME/.codex}/skills`, and every generated Claude Code skill into
+`${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills`. It refuses to replace an existing path it
 does not own. Pass `--global-agents` to also link this repository's `AGENTS.md`;
 that opt-in likewise refuses to overwrite an existing non-matching file.
 

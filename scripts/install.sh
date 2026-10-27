@@ -3,6 +3,8 @@ set -euo pipefail
 
 repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 codex_root=${CODEX_HOME:-"$HOME/.codex"}
+# Claude Code reads skills from its config directory; CLAUDE_CONFIG_DIR overrides it.
+claude_root=${CLAUDE_CONFIG_DIR:-"$HOME/.claude"}
 install_agents=0
 selected_skill=""
 
@@ -35,8 +37,17 @@ link_owned_path() {
   fi
 }
 
+# Links the generated Claude Code projection of one skill when it exists.
+link_claude_skill() {
+  local source="$repo_root/claude-code/$1"
+  [[ -f "$source/SKILL.md" ]] || return 0
+  mkdir -p "$claude_root/skills"
+  link_owned_path "$source" "$claude_root/skills/$1"
+}
+
 if [[ -n "$selected_skill" ]]; then
   link_owned_path "$repo_root/skills/$selected_skill" "$codex_root/skills/$selected_skill"
+  link_claude_skill "$selected_skill"
   exit 0
 fi
 
@@ -47,6 +58,11 @@ for source in "$repo_root"/skills/*; do
 done
 
 link_owned_path "$repo_root/skills/README.md" "$codex_root/skills/README.md"
+
+for source in "$repo_root"/claude-code/*; do
+  [[ -f "$source/SKILL.md" ]] || continue
+  link_claude_skill "$(basename "$source")"
+done
 
 if [[ $install_agents -eq 1 ]]; then
   destination="$codex_root/AGENTS.md"
