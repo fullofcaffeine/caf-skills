@@ -4,11 +4,18 @@ set -euo pipefail
 repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 codex_root=${CODEX_HOME:-"$HOME/.codex"}
 install_agents=0
+selected_skill=""
 
-if [[ ${1:-} == "--global-agents" ]]; then
+if [[ $# -eq 2 && $1 == "--skill" ]]; then
+  selected_skill=$2
+  if [[ ! $selected_skill =~ ^[a-z0-9][a-z0-9-]*$ || ! -f "$repo_root/skills/$selected_skill/SKILL.md" ]]; then
+    echo "unknown or invalid skill: $selected_skill" >&2
+    exit 2
+  fi
+elif [[ ${1:-} == "--global-agents" ]]; then
   install_agents=1
 elif [[ $# -ne 0 ]]; then
-  echo "usage: $0 [--global-agents]" >&2
+  echo "usage: $0 [--global-agents | --skill NAME]" >&2
   exit 2
 fi
 
@@ -27,6 +34,11 @@ link_owned_path() {
     echo "linked: $destination -> $source"
   fi
 }
+
+if [[ -n "$selected_skill" ]]; then
+  link_owned_path "$repo_root/skills/$selected_skill" "$codex_root/skills/$selected_skill"
+  exit 0
+fi
 
 for source in "$repo_root"/skills/*; do
   [[ -f "$source/SKILL.md" ]] || continue

@@ -29,6 +29,14 @@ stricter or target-specific contract.
   pattern matching, typed adapters/codecs, and compiler diagnostics. Use raw
   strings primarily at protocol, CLI, JSON, filesystem, and compatibility
   boundaries, then narrow them as soon as practical.
+- Actively look for distinctive Haxe features that materially improve the
+  implementation or developer experience instead of treating Haxe as a thin
+  syntax layer over the target language. Prefer compile-time typing, abstracts,
+  enums and pattern matching, metadata, conditional compilation, and macros
+  when they make ownership clearer, prevent invalid states, remove drift, or
+  produce better diagnostics. Keep target-native code at genuine interop and
+  tooling boundaries, and choose each feature for a concrete benefit rather
+  than novelty.
 - Let Haxe infer, default, derive, validate, or generate statically knowable
   behavior when that removes repetition without hiding ownership or target
   cost. Use macros for compile-time invariants or drift-prone boilerplate, not
@@ -37,6 +45,12 @@ stricter or target-specific contract.
   Do not create an all-static shell class unless class identity, construction,
   inheritance, an interface, metadata, macro discovery, or a host export shape
   requires it.
+- Keep source files cohesive, readable, and easy to review. Split a file when
+  it accumulates independent responsibilities, lifecycle owners, change
+  reasons, or test seams; name the resulting modules after the behavior they
+  own and keep their boundaries strongly typed. Do not wait for a file to
+  become a large catch-all, but also avoid mechanical one-type-per-file
+  fragmentation when closely related private types form one clear module.
 - Prefer named record-shaped inputs for DTOs, requests, outcomes, policies, and
   configuration. Avoid long positional constructors, especially more than
   five to seven scalar parameters or adjacent `Bool`, `Int`, and `String`

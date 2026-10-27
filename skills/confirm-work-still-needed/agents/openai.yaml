@@ -1,0 +1,4 @@
+interface:
+  display_name: "Confirm Work Still Needed"
+  short_description: "Verify work is unresolved and not duplicated"
+  default_prompt: "Use $confirm-work-still-needed to verify that proposed work remains unresolved, is not duplicated in a shared library, and is not actively owned by another agent."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beads"
+  short_description: "Track work and shared-library coordination safely"
+  default_prompt: "Use $beads to work with this repository’s live issue database and shared-library coordination history safely."
