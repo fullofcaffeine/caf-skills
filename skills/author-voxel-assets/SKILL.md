@@ -4,7 +4,7 @@ description: "Design, create, convert, review, and integrate voxel models such a
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f0a78dc5086808eef05de68485f72799f8f6a581a9dbe32a6b537d079214169. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:f08bd2abcbe72f58d5eeb2736ef7911e8dda6139efcac66c0c2acf73284b4fda -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f0a78dc5086808eef05de68485f72799f8f6a581a9dbe32a6b537d079214169. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:f08bd2abcbe72f58d5eeb2736ef7911e8dda6139efcac66c0c2acf73284b4fda -->
 
 # Author voxel assets
 

@@ -4,7 +4,7 @@ description: "Record clear, public ownership and provenance whenever an AI agent
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:fd2a68aac164cacc11b8d0b927dfe2f129f2cdaf2c7b138345d075aa0e38688f. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:6c6b670fb81e6f628fcf14f8e170d2094ac01ee8826c6eef88dd2636485d5c7c -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:fd2a68aac164cacc11b8d0b927dfe2f129f2cdaf2c7b138345d075aa0e38688f. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:6c6b670fb81e6f628fcf14f8e170d2094ac01ee8826c6eef88dd2636485d5c7c -->
 
 # Document Agent PR Ownership
 

@@ -4,7 +4,7 @@ description: "Safely remove sensitive strings or path leaks from Git history wit
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:1fd08bd046ef6ca443b4dd58df172d7a8aa033ba9033d9f7b9498faea29e1a04. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:1d951ecd9dfa67e3066b6176ff8d710cc21518c17c03f35dcbea174fc5e9e81f -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:1fd08bd046ef6ca443b4dd58df172d7a8aa033ba9033d9f7b9498faea29e1a04. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:1d951ecd9dfa67e3066b6176ff8d710cc21518c17c03f35dcbea174fc5e9e81f -->
 
 # Git History Scrub Safety
 

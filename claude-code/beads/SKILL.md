@@ -4,7 +4,7 @@ description: "Use Beads (`bd`) safely for durable issue tracking, dependencies, 
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:48ebef3a4d17c58a36728d8125508b4a6db55d46863e05d8b74b072a5b662d1f. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:8cdb0428b726bbc028d8116638d86393734d5a0f368059f27f8758cbcf64fe5d -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:48ebef3a4d17c58a36728d8125508b4a6db55d46863e05d8b74b072a5b662d1f. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:8cdb0428b726bbc028d8116638d86393734d5a0f368059f27f8758cbcf64fe5d -->
 
 # Beads
 

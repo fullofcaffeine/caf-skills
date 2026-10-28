@@ -1,7 +1,10 @@
 ---
 name: calibrate-reasoning-effort
-description: Assess task complexity, recommend the lowest effective Codex reasoning setup—low, medium, high, xhigh, max, or ultra—and automatically apply it for subsequent turns while preserving the currently selected model, including GPT-6 Astra and GPT-5.6 Sol, whenever a supported host or bundled App Server control is available. Use before substantial work, whenever scope or risk changes, when starting or claiming a task, choosing a thinking label, planning an agent run, answering which reasoning level is appropriate, or balancing quality against latency and token usage. Before max or ultra, recommend oracle-review when a slower independent review can receive enough exact context. Treat every level as a phase-scoped lease, release it as soon as a cheaper level becomes effective, and keep max or xhigh only for the shortest necessary decision window.
+description: "Assess task complexity, recommend the lowest effective reasoning setup—low, medium, high, xhigh, max, or ultra—and automatically apply it for subsequent turns while preserving the currently selected model, including GPT-6 Astra and GPT-5.6 Sol, whenever a supported host control or the bundled harness-detecting helper is available. Use before substantial work, whenever scope or risk changes, when starting or claiming a task, choosing a thinking label, planning an agent run, answering which reasoning level is appropriate, or balancing quality against latency and token usage. Before max or ultra, recommend oracle-review when a slower independent review can receive enough exact context. Treat every level as a phase-scoped lease, release it as soon as a cheaper level becomes effective, and keep max or xhigh only for the shortest necessary decision window."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f7b5af895706d134d2ab5eb7c74ea3e32fad5df24a510764659768ba7ecc34c6. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:ea4326c1ff73a1a0dc68b21a3ab8f34941e5aac199cc3a76e7e6e7743f3022b3 -->
 
 # Calibrate Reasoning Effort
 
@@ -18,6 +21,8 @@ total expected cost =
   + coordination
   + probability of a wrong decision × cost of its consequences
 ```
+
+## Calibrate, apply, and release the reasoning lease
 
 ## Required quick start
 
@@ -39,20 +44,27 @@ occurs, apply the lower level before another substantial edit, test, diagnosis,
 or planning step. Do not wait for the task to close or for the user to ask.
 
 Do not stop after writing a recommendation or task label. First prefer a direct
-host/orchestrator effort control. Otherwise, when `CODEX_THREAD_ID` and
-`CODEX_HOME` are present, run the bundled helper before beginning substantial
-work:
+host/orchestrator effort control. Otherwise, run the bundled helper before
+beginning substantial work. It detects the harness: Codex when
+`CODEX_THREAD_ID` and `CODEX_HOME` are present, Claude Code when
+`CLAUDECODE=1`:
 
 ```sh
 node <skill-dir>/scripts/apply-reasoning-effort.mjs <level>
 ```
 
-The helper checks the existing App Server control socket itself. Do not assume
+On Codex, the helper checks the existing App Server control socket itself. Do not assume
 control is unavailable merely because no reasoning tool or socket environment
 variable appears in the visible tool list. Report the helper's
 `{"applied":true}` result as applying only to subsequent turns. If it fails,
 report the concise cause and continue at the available setting; never claim the
 active turn changed.
+
+On Claude Code, a running session cannot change its own effort; only the
+user's `/effort` command can. The helper returns `{"applied":false}` with that
+route. Run the phase's work in a subagent with the requested effort and the
+current model, and recommend `/effort <level>` when the main session itself
+must change. A subagent's effort applies only to that subagent's work.
 
 Searching or inspecting the visible tool list is not an application attempt.
 If no direct effort-control tool is callable, invoke the bundled helper
@@ -62,7 +74,7 @@ the helper has actually returned a failure. Keep these status words exact:
 
 - `recommended` means the level was selected but has not been proved active;
 - `applied` means a direct control or the helper returned success for subsequent
-  turns;
+  turns, or a subagent runs the phase at that level;
 - `unavailable` means every applicable control path was attempted and failed.
 
 The lowest plausible level is often not the lowest effective level. Spending a
@@ -193,20 +205,21 @@ turn.
 6. Immediately apply the recommended level for subsequent turns when a runtime
    control is available. This is a required part of using the skill, not an
    optional suggestion. Prefer a direct host or orchestrator reasoning-effort
-   control. Otherwise, if `CODEX_THREAD_ID` and `CODEX_HOME` are available, run:
+   control. Otherwise, run the bundled helper:
 
    ```sh
    node <skill-dir>/scripts/apply-reasoning-effort.mjs <level>
    ```
 
    Replace `<skill-dir>` with this skill's directory and `<level>` with the
-   selected value. The helper locates and checks the control socket under
+   selected value. On Codex, the helper locates and checks the control socket under
    `CODEX_HOME`; do not pre-emptively skip it because a socket-specific
    environment variable or visible tool is absent. A tool-list search does not
    satisfy this step. Do not ask for approval for this scoped
    settings update. Treat an `{"applied":true}` result as proof only for
    subsequent turns. If no supported control is available, say the
-   recommendation was not applied and continue with the current setting. For a
+   recommendation was not applied and continue with the current setting. On
+   Claude Code, follow the subagent route above. For a
    direct Codex TUI without a control socket, recommend launching future
    sessions with `codex-controlled`; do not start a second App Server beside
    the active embedded session.
@@ -272,8 +285,8 @@ Keep these actions distinct:
 1. **Recommend:** state the lowest effective level and one-sentence reason. When
    requested, also return the machine-readable record below. This is always
    possible.
-2. **Apply:** immediately use an exposed host control or the bundled App Server
-   helper to set the recommended effort for subsequent turns. When either
+2. **Apply:** immediately use an exposed host control or the bundled helper to
+   set the recommended effort for subsequent turns. When either
    control exists, application is mandatory. Never claim the active turn
    changed merely because a recommendation, task label, or update request was
    written.
@@ -299,6 +312,12 @@ For local CLI use, `codex-controlled` starts or reuses one Unix-socket App
 Server per `CODEX_HOME` and launches the TUI against it. Multiple TUI instances
 may share that server safely because the helper updates only the thread named by
 the calling process's `CODEX_THREAD_ID`.
+
+Claude Code reads its effort setting at session start, and only the user's
+`/effort` or `/model` command changes the main session. The Agent tool accepts
+an effort for each subagent it starts. To reach a higher effort for one phase,
+delegate that phase to a subagent with the same model and the requested effort,
+then reconcile its result in the main session.
 
 When an orchestrator exposes both model and reasoning controls for a new turn
 or agent, preserve the selected model and set only reasoning effort. Do not
@@ -378,6 +397,25 @@ it. Briefly warn when it is likely to increase total cost or risk—for example,
 `low` on a subtle cache invalidation change or `ultra` on a task with no useful
 parallel split—but do not silently claim a different level was used.
 
-Do not browse model documentation during routine calibration. Check current
-official OpenAI documentation only when the user asks for verification or when
-the available model or effort controls conflict with this skill.
+Do not browse model documentation during routine calibration. Check the current
+official documentation for the harness and model provider only when the user
+asks for verification or when the available model or effort controls conflict
+with this skill.
+
+Reason: Effort that stays too low causes rework, and effort that stays too high wastes tokens and latency; applying and releasing a phase-scoped level through the harness's real control keeps total cost low without claiming a change that did not happen.
+
+Examples:
+- On Claude Code, the helper reports applied false with the /effort route. Run the hard phase in a subagent with the requested effort and the same model, and recommend /effort for the main session.
+- On Codex, the helper reports applied true for harness codex. Report the level as applied for subsequent turns only, never for the active turn.
+
+Limits:
+- Do not change the selected model as part of calibration.
+- Do not report an effort as applied when the helper or host control did not return success.
+
+Authority boundary: This skill guides effort choice and may run its bundled helper within the package's effect ceilings. It grants no source write, task, provider, model, or other effect authority.
+
+## Included assets
+
+These files are part of the exact package closure. Inclusion does not permit helper execution.
+
+- `scripts/apply-reasoning-effort.mjs` — helper; effectful-adapter

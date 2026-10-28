@@ -4,7 +4,7 @@ description: "Verify that a tracked task, bug, roadmap item, audit finding, pull
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f9fd1d161db8d2e453f5ee16e3836799cd07c19437ef02c78566eda8e13a4db7. Selection digest: sha256:891cc23644e39140d565408a22ff4e12973c2a2a4a513311cbaff0a8b09061a0. Effective AgentSpec digest: sha256:1836fb439d9c7a94acceb790aa0b98f0fff74a9316ff5b8aef5cda95dfd27d2c -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f9fd1d161db8d2e453f5ee16e3836799cd07c19437ef02c78566eda8e13a4db7. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:1836fb439d9c7a94acceb790aa0b98f0fff74a9316ff5b8aef5cda95dfd27d2c -->
 
 # Confirm Work Still Needed
 
