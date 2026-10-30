@@ -19,9 +19,11 @@ Edit the CML, not a generated `SKILL.md`; each generated file says so in its
 header. `calibrate-reasoning-effort` and `frontend-design` are generated too,
 including their helper script and license files.
 
-Cafetera's `./bin/check` renders every generated skill and compares the bytes
-with a sibling `../caf-skills` clone. When they differ, it lists each file and
-prints the republish command above.
+To check that this clone matches the CML, run `bin/check-skills-published`
+from a Cafetera clone next to this one (pass a path to check another clone).
+It renders every generated skill, compares the bytes, and lists each file that
+differs together with the republish command above. Cafetera's `./bin/check`
+does not compare this clone, so its result never depends on this repository.
 
 Only `show-me-your-work` is still maintained here by hand. It exists only in
 `skills/` for Codex, so it has no `claude-code/` or `pi/` copy.
