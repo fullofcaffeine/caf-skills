@@ -4,7 +4,7 @@ description: "Write or rewrite technical text with the rules of ASD-STE100 Simpl
 license: "MIT"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f2826fadcbc9fe03d2e5f27921ac83b26dcc40f129d7e294defdef6704acc67. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:7f0598d37476a5b829e923afe4a372f594538d555f2ab179f5a1aa9e84a69871 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f2826fadcbc9fe03d2e5f27921ac83b26dcc40f129d7e294defdef6704acc67. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:7f0598d37476a5b829e923afe4a372f594538d555f2ab179f5a1aa9e84a69871 -->
 
 # Simple English: Write Like an Aerospace Manual
 
@@ -14,7 +14,7 @@ Write for that tired reader. Each sentence must survive one read.
 
 ## Apply the Simple English method
 
-## Your Task
+### Your Task
 
 When asked to write or rewrite technical text:
 
@@ -27,14 +27,14 @@ When asked to write or rewrite technical text:
 
 When asked to CHECK text instead of writing it, report each violation as: rule number, the offending text, a compliant rewrite. Cite only rule numbers that exist in this file. Do not cite rule numbers from memory: the numbering is unintuitive and models invent it (tested — an agent without this file cited "Rule 3.1: short sentences"; the real Rule 3.1 is about verb forms).
 
-## Two Modes
+### Two Modes
 
 | Mode | When | What you apply |
 |---|---|---|
 | **Pragmatic** (default) | Docs, READMEs, error messages — the user wants clear text | All structural rules. Domain words stay ("idempotent", "webhook"). |
 | **Strict** | The user names STE, ASD-STE100, or compliance | Structural rules + full vocabulary discipline, and tell the user that full compliance needs the official dictionary (free at asd-ste100.org). |
 
-## Step 1: Classify the Text
+### Step 1: Classify the Text
 
 | | Procedural (instructions) | Descriptive (explanations) |
 |---|---|---|
@@ -45,11 +45,11 @@ When asked to CHECK text instead of writing it, report each violation as: rule n
 
 Do not mix the two in one passage. A "Getting started" section is procedural. An "Architecture" section is descriptive. A note inside a procedure is descriptive (25-word limit, no imperative).
 
-## THE RULE CATALOG
+### THE RULE CATALOG
 
 53 rules in 9 sections, paraphrased from ASD-STE100 Issue 9 with software examples. The official wording is in the free standard at asd-ste100.org.
 
-### Section 1 — Words (Rules 1.1-1.14)
+#### Section 1 — Words (Rules 1.1-1.14)
 
 | Rule | Instruction |
 |---|---|
@@ -73,7 +73,7 @@ In pragmatic mode, rules 1.5, 1.8, and 1.12 do the heavy lifting: your domain vo
 **Before:** You can webhook the event, then do a deploy.
 **After:** Send the event to the webhook. Then deploy the service.
 
-### Section 2 — Multi-word nouns (Rules 2.1-2.2)
+#### Section 2 — Multi-word nouns (Rules 2.1-2.2)
 
 | Rule | Instruction |
 |---|---|
@@ -85,7 +85,7 @@ Break long noun chains with prepositions (of, on, in, for):
 **Before:** the connection pool timeout configuration value
 **After:** the timeout value for the connection pool
 
-### Section 3 — Verbs (Rules 3.1-3.7)
+#### Section 3 — Verbs (Rules 3.1-3.7)
 
 | Rule | Instruction |
 |---|---|
@@ -109,7 +109,7 @@ The standard rejects "could" even for possibility: write "an explosion can occur
 **Before:** The temperature must be adjusted.
 **After:** Adjust the temperature.
 
-### Section 4 — Sentences (Rules 4.1-4.5)
+#### Section 4 — Sentences (Rules 4.1-4.5)
 
 | Rule | Instruction |
 |---|---|
@@ -124,7 +124,7 @@ Rule 4.2 is the anti-terseness rule. STE is short sentences with complete gramma
 **Wrong shortening:** Ensure file exists before running.
 **STE:** Make sure that the file exists before you run the command.
 
-### Section 5 — Procedural writing (Rules 5.1-5.5)
+#### Section 5 — Procedural writing (Rules 5.1-5.5)
 
 | Rule | Instruction |
 |---|---|
@@ -137,7 +137,7 @@ Rule 4.2 is the anti-terseness rule. STE is short sentences with complete gramma
 **Before:** You'll want to grab the API key from the dashboard before configuring the client, which you can do under Settings.
 **After:** Get the API key from the dashboard, under Settings. Then configure the client with this key.
 
-### Section 6 — Descriptive writing (Rules 6.1-6.6)
+#### Section 6 — Descriptive writing (Rules 6.1-6.6)
 
 | Rule | Instruction |
 |---|---|
@@ -150,7 +150,7 @@ Rule 4.2 is the anti-terseness rule. STE is short sentences with complete gramma
 
 No imperative in descriptive text. Descriptions explain; procedures instruct.
 
-### Section 7 — Safety instructions (Rules 7.1-7.3)
+#### Section 7 — Safety instructions (Rules 7.1-7.3)
 
 | Rule | Instruction |
 |---|---|
@@ -163,7 +163,7 @@ Never bury the instruction after the explanation. The pattern transfers directly
 **Before:** Note that data loss may occur in some circumstances if the destructive flag happens to be enabled when running against production.
 **After:** CAUTION: Do not use the `--force` flag against production. The flag deletes rows that do not match the source.
 
-### Section 8 — Punctuation and word count (Rules 8.1-8.7)
+#### Section 8 — Punctuation and word count (Rules 8.1-8.7)
 
 | Rule | Instruction |
 |---|---|
@@ -177,7 +177,7 @@ Never bury the instruction after the explanation. The pattern transfers directly
 
 Rule 8.6 matters for software text: `sqlpipe run --config sqlpipe.yaml` in backticks is quoted text and counts as one word. Long identifiers do not blow your sentence budget.
 
-### Section 9 — Writing practices (Rules 9.1-9.4, GR-1 to GR-8)
+#### Section 9 — Writing practices (Rules 9.1-9.4, GR-1 to GR-8)
 
 | Rule | Instruction |
 |---|---|
@@ -190,7 +190,7 @@ General recommendations GR-1 to GR-8: keep the conjunction "that", be careful wi
 
 GR-6 for software docs: "e.g." → "for example", "i.e." → "that is", and delete "etc." — name the items or write "and more".
 
-## VOCABULARY DISCIPLINE
+### VOCABULARY DISCIPLINE
 
 The official dictionary (~900 approved words, ~1,200 banned words with alternatives) is copyrighted by ASD and is not reproduced here. Its mechanics apply without it: **one word, one meaning, one part of speech.**
 
@@ -205,7 +205,7 @@ Known part-of-speech rulings, useful as patterns:
 | follow | "To come after" only, never "obey". Write "obey the instructions". |
 | above, below | Physical positions only. For limits write "more than", "less than". |
 
-### The modal ladder
+#### The modal ladder
 
 | You wrote | STE writes |
 |---|---|
@@ -215,7 +215,7 @@ Known part-of-speech rulings, useful as patterns:
 | may (permission) | can |
 | would (hypothetical) | Restructure: "If X occurs, Y occurs." |
 
-### Slop-to-simple substitutions
+#### Slop-to-simple substitutions
 
 This table is ours, not the ASD dictionary. It maps the words AI-generated docs overuse to plain replacements. If the word carries no fact, delete it instead of replacing it.
 
@@ -248,7 +248,7 @@ This table is ours, not the ASD dictionary. It maps the words AI-generated docs 
 | plethora, myriad | many |
 | addresses the issue, tackles | corrects the fault, removes the error |
 
-### Consistency pass
+#### Consistency pass
 
 Collapse synonym rotations to one term each (Rules 1.11, 9.4). The two lists below work differently.
 
@@ -272,7 +272,7 @@ Collapse synonym rotations to one term each (Rules 1.11, 9.4). The two lists bel
 | error | Approved noun | Keep it |
 | problem | Approved noun | Keep it |
 
-## Untouchables
+### Untouchables
 
 These are technical names (Rules 1.5, 8.6). Leave them exact, even when they break vocabulary rules:
 
@@ -281,7 +281,7 @@ These are technical names (Rules 1.5, 8.6). Leave them exact, even when they bre
 - Product names, API endpoint names, config keys
 - Numbers with units — each counts as one word in the sentence limit
 
-## Beyond Documentation
+### Beyond Documentation
 
 Same rules, different targets. Full adaptations in `references/use-cases.md`:
 
@@ -292,7 +292,7 @@ Same rules, different targets. Full adaptations in `references/use-cases.md`:
 - **Agent instructions (prompts, AGENTS.md)**: a system prompt is a procedure for a reader that cannot ask questions. One instruction per sentence, no "should", condition first.
 - **Translation prep**: STE's original job. One meaning per word plus complete grammar removes most translation ambiguity.
 
-## Self-Check Before You Deliver
+### Self-Check Before You Deliver
 
 This step is not optional. Run these four checks on your draft:
 
@@ -303,7 +303,7 @@ This step is not optional. Run these four checks on your draft:
 
 Fix what you find, then deliver. For a full audit, run `references/checklist.md`.
 
-## Full Example
+### Full Example
 
 **Before (real unedited AI output):**
 
@@ -319,13 +319,13 @@ Fix what you find, then deliver. For a full audit, run `references/checklist.md`
 
 What changed: 40-word sentences split under 20; "you're" expanded; "check/confirm" collapsed to "make sure that"; every condition moved before its command; "etc." removed; code and error strings untouched.
 
-## Limits
+### Limits
 
 STE is for technical facts and instructions. Do not apply it to marketing copy, blog voice, or brand writing — it deletes persuasion by design. When a user asks for STE on marketing text, say so and offer it for the docs instead.
 
 This skill is an unofficial aid. It is not affiliated with or endorsed by ASD or STEMG, and no tool can guarantee STE compliance. ASD-STE100 is a registered trademark of ASD. The official standard is a free download at asd-ste100.org.
 
-## References
+### References
 
 - `references/checklist.md` — full verification pass with searchable patterns, for check mode and final audits
 - `references/use-cases.md` — long-form adaptations: error messages, runbooks, incident reports, commits, UI copy, i18n
@@ -345,7 +345,7 @@ Authority boundary: This skill guides writing and review only. It grants no sour
 
 ## Included assets
 
-These files are part of the exact package closure. Inclusion does not permit helper execution.
+These files are part of the exact package closure. Including a file grants nothing by itself. This guidance-only package declares no actions or effects and includes no helper to run.
 
 - `references/checklist.md` — reference; none
 - `references/use-cases.md` — reference; none

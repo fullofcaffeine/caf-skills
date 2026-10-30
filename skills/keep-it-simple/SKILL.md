@@ -4,7 +4,7 @@ description: "Find the clearest complete design with the least accidental comple
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:0cb842dee1a0b28cef6bb613cce4b52673b592850f184c47e5a7e3546e0652d0. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:104701101d96c8ef328dff2b0d34b33b4b98f8e11ffd983affab8a54bfbe6a9c -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:0cb842dee1a0b28cef6bb613cce4b52673b592850f184c47e5a7e3546e0652d0. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:104701101d96c8ef328dff2b0d34b33b4b98f8e11ffd983affab8a54bfbe6a9c -->
 
 # Keep It Simple
 
@@ -20,7 +20,7 @@ doing it later would create a worse boundary or substantial rework.
 
 ## Choose the clearest complete design
 
-## Use the simplicity test
+### Use the simplicity test
 
 1. State the complete outcome before reducing the design.
 2. List the quality, safety, correctness, lifecycle, and evidence invariants.
@@ -39,7 +39,7 @@ direction, a hard-to-change public boundary, repeated maintenance cost, a known
 security risk, or a concrete developer-experience goal can also justify a little
 more work. Do not add machinery for an unspecified hypothetical future.
 
-## Reuse before build
+### Reuse before build
 
 Run a proportionate reuse audit before adding a durable concept or a substantial
 implementation path.
@@ -68,7 +68,7 @@ If two active owners could become parallel frameworks, pause the dependent
 implementation. Ask the owners to agree on the shared seam, or request focused
 independent architecture review when the correct owner remains ambiguous.
 
-## Prefer direct designs
+### Prefer direct designs
 
 - Prefer one authority, one owner, and one path for each effect.
 - Prefer semantic or typed platform primitives over custom tracking state.
@@ -83,7 +83,7 @@ independent architecture review when the correct owner remains ambiguous.
 - Delete superseded code in the same migration when no real compatibility
   boundary requires both paths.
 
-## Do not make it simpler than the goal allows
+### Do not make it simpler than the goal allows
 
 Keep complexity when removing it would weaken a required invariant. High-cost
 failures can justify a small, explicit guard even when the normal flow looks
@@ -112,7 +112,7 @@ removes a duplicate path, establishes one durable owner, makes a public boundary
 harder to misuse, enables a stated product direction, or avoids likely rework.
 Keep that work focused and explain why it reduces total complexity.
 
-## Stop adding layers
+### Stop adding layers
 
 Stop when the complete outcome and its invariants have proportionate evidence.
 Do not stop at a minimal tracer bullet when the stated goal also requires a

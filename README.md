@@ -12,11 +12,19 @@ Reusable Codex skills and personal global agent guidance maintained by
 - `skills/README.md` documents the installed skill registry and source owners.
 
 Most skills are generated. Their instructions are authored once as CML in the
-Cafetera repository (`caf/skills/library/`) and exported here with
+Cafetera repository (`caf/skills/library/`, plus `caf/skills/` for the
+Codex-only `caf-auditable-development`) and exported here with
 `CAF_SKILLS_PUBLISH_ROOT=<this clone> haxe tools/skills/skill-library.hxml`.
 Edit the CML, not a generated `SKILL.md`; each generated file says so in its
-header. `calibrate-reasoning-effort`, `show-me-your-work`, and
-`frontend-design` are still maintained here by hand.
+header. `calibrate-reasoning-effort` and `frontend-design` are generated too,
+including their helper script and license files.
+
+Cafetera's `./bin/check` renders every generated skill and compares the bytes
+with a sibling `../caf-skills` clone. When they differ, it lists each file and
+prints the republish command above.
+
+Only `show-me-your-work` is still maintained here by hand. It exists only in
+`skills/` for Codex, so it has no `claude-code/` or `pi/` copy.
 
 The `oracle-review` skill is intentionally owned by the caf-oracle repository,
 next to the CLI, ledger, and browser lifecycle it documents. caf-skills does

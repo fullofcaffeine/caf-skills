@@ -4,7 +4,7 @@ description: "Wait for background builds, tests, reviews, or jobs without repeat
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:d0449d6b3b7fccc5ba5c04ee89513a0724d8f0674638eb4e1cada48ce4c149d6. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:a40101bacb205af84641bbb506e4717a4529c4ba94bb8ba7396dcc45f794e6a6 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:d0449d6b3b7fccc5ba5c04ee89513a0724d8f0674638eb4e1cada48ce4c149d6. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:a40101bacb205af84641bbb506e4717a4529c4ba94bb8ba7396dcc45f794e6a6 -->
 
 # Wait for completion
 
@@ -34,7 +34,7 @@ repeated polling efficient.
 
 ## Wait passively for background completion
 
-## Codex capability routing
+### Codex capability routing
 
 Check the tools exposed by this host, not just their names:
 
@@ -55,7 +55,7 @@ If no suitable route is exposed, report the limitation once, retain the run
 record, and yield control. Do not invent a scheduler, launch a second App
 Server, or claim that this skill installs a wake mechanism.
 
-## Caf ownership
+### Caf ownership
 
 Reuse `caf:agentspec:rule:background-wait-reasoning-low` in the explicitly
 selected `caf:agentspec:policy:managed-workspace-bootstrap`. Its inline CML owner

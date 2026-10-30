@@ -4,7 +4,7 @@ description: "Assess task complexity, recommend the lowest effective reasoning s
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f7b5af895706d134d2ab5eb7c74ea3e32fad5df24a510764659768ba7ecc34c6. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:ea4326c1ff73a1a0dc68b21a3ab8f34941e5aac199cc3a76e7e6e7743f3022b3 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f7b5af895706d134d2ab5eb7c74ea3e32fad5df24a510764659768ba7ecc34c6. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:ea4326c1ff73a1a0dc68b21a3ab8f34941e5aac199cc3a76e7e6e7743f3022b3 -->
 
 # Calibrate Reasoning Effort
 
@@ -24,7 +24,7 @@ total expected cost =
 
 ## Calibrate, apply, and release the reasoning lease
 
-## Required quick start
+### Required quick start
 
 Calibration has three required steps when runtime control is available:
 
@@ -84,7 +84,7 @@ Ambiguity raises the probability of a wrong decision. A broad blast radius and
 poor reversibility raise its consequence cost. Use those relationships to make
 the tradeoff explicit without turning calibration into a fake-precise score.
 
-## Treat effort as a phase-scoped lease
+### Treat effort as a phase-scoped lease
 
 Apply a reasoning level only for as long as the current task or task phase
 justifies it. The setting is not a sticky session default and must not remain
@@ -130,7 +130,7 @@ is not a reason to downgrade. Releasing an elevated level too early can create
 more rework than it saves; retaining it after the risk has passed is also
 wasteful.
 
-### Foreground waits and monitoring
+#### Foreground waits and monitoring
 
 Treat a foreground wait as a stable phase boundary when the only remaining
 work is polling or reading a terminal status.
@@ -151,7 +151,7 @@ reasoning, editing, coordinating, or interpreting partial results concurrently.
 The downgrade is for a genuine wait-only phase. Escalate before diagnosing a
 failure, changing code, or making a consequential completion decision.
 
-### Required effort-release check
+#### Required effort-release check
 
 At every task closure and every stable phase boundary, explicitly ask whether
 the current level is still the lowest effective level for the remaining work.
@@ -178,7 +178,7 @@ turn.
   ended and calibrate when work resumes instead of inventing a task merely to
   choose a setting.
 
-## Calibrate
+### Calibrate
 
 1. Read the requested outcome, constraints, and available acceptance evidence.
    Inspect only enough local context to understand the task shape; do not turn
@@ -229,7 +229,7 @@ turn.
 8. Recalibrate only when evidence changes the task shape. Do not oscillate
    between levels for individual commands inside one stable task.
 
-## Check Oracle before max or ultra
+### Check Oracle before max or ultra
 
 Before recommending local `max` or `ultra`, recommend `$oracle-review` first
 when all these conditions hold:
@@ -258,7 +258,7 @@ If Oracle is selected, use the lowest effective local level to prepare exact
 context and continue independent work. Recalibrate when the response arrives.
 Oracle advice remains advisory and does not accept a plan, change, or effect.
 
-## Select a level
+### Select a level
 
 | Level | Use when | Typical examples |
 | --- | --- | --- |
@@ -278,7 +278,7 @@ and reduces total wall-clock or review risk. If subagents are unavailable or
 the task cannot be split safely, choose the appropriate single-agent level
 instead of calling the task ultra.
 
-## Recommend versus apply
+### Recommend versus apply
 
 Keep these actions distinct:
 
@@ -294,7 +294,7 @@ Keep these actions distinct:
 A `thinking:*` label records intent; it does not prove the runtime setting
 changed.
 
-## Capability boundary
+### Capability boundary
 
 Do not claim to change the active agent's reasoning effort unless the current
 environment exposes a tool or control that actually does so. In many Codex
@@ -340,7 +340,7 @@ machine-readable decision:
 Use `mode: "multi-agent"` only with `effort: "ultra"`. Keep the ordinary
 human-facing recommendation to one sentence unless more detail is requested.
 
-## Calibration checks
+### Calibration checks
 
 Use these contrasting cases to verify that calibration follows risk and total
 cost rather than diff size or prestige:
@@ -357,7 +357,7 @@ If a supposedly mechanical rewrite lacks a decisive checker, raise it to
 `medium`. If the independent streams cannot be cleanly owned and synthesized,
 do not call sequential complexity `ultra`.
 
-## Avoid false economy
+### Avoid false economy
 
 - Do not pick `low` merely because the requested diff is small. A one-line cache
   key, authorization rule, or ABI change can be high risk.
@@ -372,7 +372,7 @@ do not call sequential complexity `ultra`.
 - Account for verification. A correct-looking answer without decisive evidence
   is not a cheaper completion.
 
-## Escalate or reduce
+### Escalate or reduce
 
 Escalate one or more levels when:
 
@@ -390,7 +390,7 @@ For `xhigh` and `max`, plan an independent second pass before closure. For
 `ultra`, name the independent workstreams, give each the lowest effective local
 effort, and synthesize their evidence before deciding.
 
-## Respect explicit choices
+### Respect explicit choices
 
 If the user explicitly chooses a level, use it when the environment supports
 it. Briefly warn when it is likely to increase total cost or risk—for example,
@@ -416,6 +416,6 @@ Authority boundary: This skill guides effort choice and may run its bundled help
 
 ## Included assets
 
-These files are part of the exact package closure. Inclusion does not permit helper execution.
+These files are part of the exact package closure. Including a file grants nothing by itself. This effectful-adapter package declares the action `caf.action.skill.apply-reasoning-effort@1` for its effectful helpers, within these effect ceilings: `caf.effect.fs.read` at `caf.scope.user`, `caf.effect.process.spawn` at `caf.scope.user`. Running a helper still needs the harness permission and the action effect policy.
 
-- `scripts/apply-reasoning-effort.mjs` — helper; effectful-adapter
+- `scripts/apply-reasoning-effort.mjs` — helper; effectful-adapter; serves `caf.action.skill.apply-reasoning-effort@1`

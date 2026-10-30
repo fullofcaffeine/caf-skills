@@ -4,7 +4,7 @@ description: "Record clear, public ownership and provenance whenever an AI agent
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:fd2a68aac164cacc11b8d0b927dfe2f129f2cdaf2c7b138345d075aa0e38688f. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:6c6b670fb81e6f628fcf14f8e170d2094ac01ee8826c6eef88dd2636485d5c7c -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:fd2a68aac164cacc11b8d0b927dfe2f129f2cdaf2c7b138345d075aa0e38688f. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:6c6b670fb81e6f628fcf14f8e170d2094ac01ee8826c6eef88dd2636485d5c7c -->
 
 # Document Agent PR Ownership
 
@@ -14,7 +14,7 @@ replaces the problem, user value, design, examples, or verification evidence.
 
 ## Record agent provenance in pull requests
 
-## Creating a PR
+### Creating a PR
 
 Add a short `Agent provenance` section to every agent-created PR description.
 It must state:
@@ -40,7 +40,7 @@ comment without modifying this branch unless the user records a handoff.
 Do not write only `Prepared by <agent>`. Explain why that agent created the PR
 and what the attribution means operationally.
 
-## Updating or handing off a PR
+### Updating or handing off a PR
 
 If ownership changes, update the PR description and add a timestamped comment
 that names the former owner, new owner, reason, exact head, and remaining work.
@@ -50,7 +50,7 @@ If another agent discovers the PR but is not taking it over, leave the branch
 unchanged. Add a coordination comment only when it prevents ambiguity or
 duplicate effort.
 
-## Review and merge boundary
+### Review and merge boundary
 
 Before changing an agent-created PR, inspect its provenance section, comments,
 review requests, and recent activity. Do not infer abandonment merely from a

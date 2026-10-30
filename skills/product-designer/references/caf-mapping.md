@@ -1,8 +1,8 @@
 # Caf product-design mapping
 
-Use existing Caf owners to describe a product from the outside in. Craft is the
-highest owner-facing view of the product-design workflow, not a universal
-schema that absorbs every narrower contract.
+Use existing Caf owners to describe a product from the outside in. No single
+schema absorbs every narrower contract. Caf Craft is retired (ADR 0018), so
+each row below names the focused owner.
 
 ## Contents
 
@@ -19,7 +19,8 @@ schema that absorbs every narrower contract.
 | Portable screen or workspace meaning | Application Surface |
 | Given, When, Then behavior | Application conformance case |
 | Native-family expectations | Application Target |
-| Outside-in recommendations and composed design view | Craft |
+| Mockups, screenflows, and the composed design view | This skill, with Application scenarios |
+| Project and file skeletons | Template and Template Extraction |
 | Test topology and behavior coverage | Test Strategy and Test Coverage |
 | Exact selected records and implementations | Assembly |
 | Desired infrastructure topology | Infra |

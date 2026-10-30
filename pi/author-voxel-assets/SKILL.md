@@ -4,7 +4,7 @@ description: "Design, create, convert, review, and integrate voxel models such a
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f0a78dc5086808eef05de68485f72799f8f6a581a9dbe32a6b537d079214169. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:f08bd2abcbe72f58d5eeb2736ef7911e8dda6139efcac66c0c2acf73284b4fda -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f0a78dc5086808eef05de68485f72799f8f6a581a9dbe32a6b537d079214169. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:f08bd2abcbe72f58d5eeb2736ef7911e8dda6139efcac66c0c2acf73284b4fda -->
 
 # Author voxel assets
 
@@ -13,7 +13,7 @@ mechanical conversion of every source pixel into a cube.
 
 ## Author voxel assets as real volumes
 
-## Establish the contract
+### Establish the contract
 
 Inspect the repository before you edit an asset. Identify:
 
@@ -29,7 +29,7 @@ Inspect the repository before you edit an asset. Identify:
 Do not assume that `.vox` means MagicaVoxel or that one loader supports every
 chunk in that format. Use the loader's admitted format as the exact boundary.
 
-## Choose an authoring route
+### Choose an authoring route
 
 Use an existing repository route when it produces maintainable source and
 reviewable output.
@@ -46,7 +46,7 @@ For a 2D reference, retain its identity and visual language. Re-author its
 depth, side, back, underside, and contact with the ground. Keep the 2D image
 for an icon or fallback when that remains useful.
 
-## Author the model
+### Author the model
 
 Start with broad forms and inspect the silhouette from the expected camera
 angles. Add details only after the volume reads correctly.
@@ -61,7 +61,7 @@ angles. Add details only after the volume reads correctly.
 Do not extrude one cube for every opaque sprite pixel by default. That creates
 a textured slab, preserves edge noise, and gives no authored side silhouette.
 
-## Integrate without special cases
+### Integrate without special cases
 
 Put model selection, transform, scale, state, and clip names in reloadable data
 when the product supports data-driven content. Keep the engine generic. Do not
@@ -71,7 +71,7 @@ Use one loader owner for each native model resource. Cache or share only with
 an explicit lifetime. Release every loaded resource exactly once. Keep a clear
 fallback for missing or rejected data when the product requires one.
 
-## Validate the result
+### Validate the result
 
 Use independent checks for different claims:
 
@@ -86,14 +86,14 @@ Do not replace visual review with a screenshot checksum. Use semantic tests for
 the loader, manifest, lifecycle, and animation state machine. Use gameplay
 review for art quality and readability.
 
-## Add animation only with a stated representation
+### Add animation only with a stated representation
 
 Read [animation.md](references/animation.md) before you design an animated
 prop, character, or enemy. A static `.vox` model does not contain animation by
 itself. Select frame models, rigid parts, or a skeleton from the actual motion
 contract. Start with one real clip before you expand the format.
 
-## Record provenance
+### Record provenance
 
 Record the editable source, generation command, reference inputs, license, and
 intentional external inspiration. Borrow a technique, not another game's
@@ -122,6 +122,6 @@ Authority boundary: This skill guides writing and review only. It grants no sour
 
 ## Included assets
 
-These files are part of the exact package closure. Inclusion does not permit helper execution.
+These files are part of the exact package closure. Including a file grants nothing by itself. This guidance-only package declares no actions or effects and includes no helper to run.
 
 - `references/animation.md` — reference; none

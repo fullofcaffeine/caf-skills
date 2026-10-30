@@ -4,7 +4,7 @@ description: "Make specialized explanations understandable to capable newcomers 
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:b4d83ab9a4b3225cb2e76392c6bacc0d0133fa77ad1a892959be65898e2547a8. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:b721f7764455f0bed0ad00853e3bd04dc29003b0afd10977137a7747ec9cc8b5 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:b4d83ab9a4b3225cb2e76392c6bacc0d0133fa77ad1a892959be65898e2547a8. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:b721f7764455f0bed0ad00853e3bd04dc29003b0afd10977137a7747ec9cc8b5 -->
 
 # Explain Technical Work
 
@@ -14,7 +14,7 @@ Apply the method to the terms actually used in the current work. Do not carry a 
 
 ## Explain technical work for capable newcomers
 
-## Use Simple English for the wording pass
+### Use Simple English for the wording pass
 
 Load and consult the installed `simple-english` skill before drafting. Use this
 skill to determine the truth, structure, and evidence first. Use
@@ -38,7 +38,7 @@ Do not apply controlled-language rules to code or other exact technical text.
 Use the broader explanation workflow when the task needs reasoning that a
 shorter or more controlled sentence cannot preserve.
 
-## Plain language is the default
+### Plain language is the default
 
 Do not make the reader learn internal vocabulary when familiar words can state
 the same fact accurately. Before defining a specialized term, ask whether it
@@ -62,9 +62,9 @@ Apply this rule to titles, headings, summaries, tables, and bullets—not only t
 the explanatory paragraphs. Avoid strings of unexplained specialist nouns
 even when each individual word is technically correct.
 
-## Workflow
+### Workflow
 
-### 1. Set the reader's starting point
+#### 1. Set the reader's starting point
 
 Assume a capable reader who understands the broad field but is new to this particular system, study, organization, or procedure unless the task states otherwise. Do not assume knowledge of local acronyms, component names, process stages, issue labels, metrics, models, policies, team conventions, or specialized meanings.
 
@@ -75,7 +75,7 @@ State the practical outcome first:
 - Who notices the difference?
 - What remains unfinished?
 
-### 2. Reconstruct the origin and user value
+#### 2. Reconstruct the origin and user value
 
 Make the explanation stand on its own. A reader should not need to have
 followed an earlier issue, review, incident, or conversation to learn why the
@@ -106,7 +106,7 @@ document and link directly to the earlier issue, PR, incident, or decision.
 Never use a link as a substitute for the summary. If the real origin is
 unknown, say which evidence is available instead of inventing a story.
 
-### 3. Give the smallest useful mental model
+#### 3. Give the smallest useful mental model
 
 Before naming specialized concepts, explain the smallest useful relationship in ordinary verbs. Adapt the shape to the subject, for example:
 
@@ -116,7 +116,7 @@ starting state or input -> action, decision, or transformation -> observable res
 
 For a hierarchy, comparison, causal claim, or lifecycle, use the corresponding small mental model instead of forcing everything into a pipeline. Name the formal concept or owning component only after explaining what it does. Use a small example when prose alone would leave the reader guessing.
 
-### 4. Explain concrete things before technical labels
+#### 4. Explain concrete things before technical labels
 
 When a reader asks what a term means, begin one layer earlier than the term.
 Show the ordinary input, action, value, file, message, or output that exists in
@@ -145,7 +145,7 @@ sentence must either be ordinary language or have already been explained. If
 explaining term A requires term B, explain B first. Do not make the reader ask
 for the definitions in reverse order.
 
-### 5. State the positive operational contract
+#### 5. State the positive operational contract
 
 When explaining a mechanism, rule, annotation, flag, permission, API, policy,
 compiler feature, or relationship, do not lead with a list of things it does
@@ -191,7 +191,7 @@ The letters are relationship placeholders, not a required writing template.
 If the reader still cannot say “who can now do what, to which thing, when, and
 with what consequence,” the explanation is incomplete.
 
-### 6. Audit terminology
+#### 6. Audit terminology
 
 Treat a term as jargon when a newcomer could reasonably assign it a different meaning. This includes:
 
@@ -215,7 +215,7 @@ familiar alternative when it preserves the meaning. When the exact term must
 carry the argument, define it at first use and retain it where readers need it
 for search, implementation, review, or further study.
 
-### 7. Replace compressed labels with actions
+#### 7. Replace compressed labels with actions
 
 When a dense label compresses several actions, unpack it into an ordered sequence of verbs. For example, a phrase such as “version-checked coordinated update” might mean:
 
@@ -226,7 +226,7 @@ When a dense label compresses several actions, unpack it into an ordered sequenc
 
 After explaining the sequence, introduce the formal or local name if it helps later discussion. Do not treat this example's wording as a preferred vocabulary for unrelated domains.
 
-### 8. Show before, problem, and after
+#### 8. Show before, problem, and after
 
 Use the most concrete evidence available:
 
@@ -238,7 +238,7 @@ When output was never produced, say so and show the real failure boundary. Never
 
 Explain observable consequences in the vocabulary of the current domain—for example ordering, uncertainty, retries, identity, permissions, data loss, latency, compatibility, cost, safety, or failure handling. Do not substitute an inventory of internal names for the practical result.
 
-### 9. Layer detail instead of removing it
+#### 9. Layer detail instead of removing it
 
 Use this order:
 
@@ -251,13 +251,13 @@ Use this order:
 
 Keep exact identifiers, formulas, classifications, and source names when they support searchability, reproduction, implementation, or review. Introduce them after the reader knows why they matter.
 
-### 10. Add useful references
+#### 10. Add useful references
 
 Link directly to the best next source: a primary study, dataset, standard, policy, public documentation, source contract, decision record, focused test, benchmark method, or incident record. Describe what each link helps the reader understand.
 
 Do not use a pile of links as a substitute for explanation. Prefer primary sources for claims about behavior.
 
-### 11. Run the first-read check
+#### 11. Run the first-read check
 
 Before publishing, verify:
 
@@ -287,13 +287,13 @@ Before publishing, verify:
 
 If understanding requires opening the implementation first, rewrite the explanation.
 
-## Output-Specific Guidance
+### Output-Specific Guidance
 
-### Change proposals and decision records
+#### Change proposals and decision records
 
 Use clear **Why**, **What**, and **How** sections when they fit. Add the concrete before/problem/after example near **Why**. Explain tradeoffs and rejected alternatives in terms of outcomes, maintenance, evidence, risk, cost, and affected people before internal structure.
 
-### Pull request descriptions
+#### Pull request descriptions
 
 Write a PR as a standalone review document, not as a patch inventory or an
 issue-thread continuation. Near the top:
@@ -312,23 +312,23 @@ matter. A heading named **Why** is not sufficient when its content begins with
 repository-local facts such as “there was no owner” or “the gate was missing.”
 Translate those facts into the workflow and risk they left unprotected.
 
-### Short change records
+#### Short change records
 
 Keep the subject concise. In the body, explain the previous state, the new state, why the difference matters, verification, and intentionally deferred scope. Avoid an inventory of files, fields, or internal labels as the main explanation.
 
-### Problems, incidents, status reports, and handoffs
+#### Problems, incidents, status reports, and handoffs
 
 Lead with the current observable state, impact, blocker or uncertainty, next meaningful outcome, and evidence. Define local status labels, severity categories, stages, and confidence terms when they first appear.
 
-### Guides, documentation, and announcements
+#### Guides, documentation, and announcements
 
 Separate the reader's action and expected result from deeper internals. Put the practical path first and link detailed reasoning, implementation, methodology, or governance material instead of forcing it into the quick path.
 
-### Research, analysis, and policy
+#### Research, analysis, and policy
 
 State the question, evidence, conclusion, confidence, and limitations separately. Define measures and categories before interpreting them. Distinguish observation from inference and recommendation, and do not make a causal or normative claim sound like a directly measured fact.
 
-## Quality Boundary
+### Quality Boundary
 
 Do not confuse newcomer-friendly language with simplification that changes the claim. Never:
 
@@ -355,6 +355,6 @@ Authority boundary: This skill guides writing and review only. It grants no sour
 
 ## Included assets
 
-These files are part of the exact package closure. Inclusion does not permit helper execution.
+These files are part of the exact package closure. Including a file grants nothing by itself. This guidance-only package declares no actions or effects and includes no helper to run.
 
 - `references/examples.md` — reference; none

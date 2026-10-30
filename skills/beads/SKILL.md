@@ -4,7 +4,7 @@ description: "Use Beads (`bd`) safely for durable issue tracking, dependencies, 
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:48ebef3a4d17c58a36728d8125508b4a6db55d46863e05d8b74b072a5b662d1f. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:8cdb0428b726bbc028d8116638d86393734d5a0f368059f27f8758cbcf64fe5d -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:48ebef3a4d17c58a36728d8125508b4a6db55d46863e05d8b74b072a5b662d1f. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:8cdb0428b726bbc028d8116638d86393734d5a0f368059f27f8758cbcf64fe5d -->
 
 # Beads
 
@@ -14,7 +14,7 @@ shell `PATH` order decide which database client opens shared issue data.
 
 ## Use Beads as the durable task record
 
-## Identify the target first
+### Identify the target first
 
 Name the repository that owns the issues before each command. When operating on
 another repository, pass that directory explicitly:
@@ -26,7 +26,7 @@ bd -C /path/to/repository ready
 `-C` selects both the repository pin and the database. Do not run plain `bd`
 from repository x when repository y owns the intended record.
 
-## Mandatory compatibility preflight
+### Mandatory compatibility preflight
 
 Run the repository's documented Beads wrapper when one exists. Otherwise run
 this preflight from the target repository before its first Beads operation and
@@ -58,7 +58,7 @@ bd --readonly info --json
 Use only that reviewed executable for the session. Do not use
 `--ignore-schema-skew` for writes.
 
-## Missing pin or client
+### Missing pin or client
 
 Treat a missing `.beads-toolchain` file or unavailable pinned client as a
 toolchain problem. Do not choose a nearby binary.
@@ -72,7 +72,7 @@ toolchain problem. Do not choose a nearby binary.
 Pinning writes only `.beads-toolchain`. It must not create or migrate the
 database. Never select a client only because it can read the current schema.
 
-## Linked worktrees that predate repository tooling
+### Linked worktrees that predate repository tooling
 
 A linked worktree can share a Git repository while its branch predates the
 reviewed Beads wrapper. Do not bypass hooks or use an ambient client.
@@ -92,7 +92,7 @@ Use the reviewed wrapper from `primary_root` when repository instructions name
 one. Otherwise use the primary repository pin and pass the database owner with
 `bd -C`. Require the ordinary read-only preflight before each first write.
 
-## Normal issue workflow
+### Normal issue workflow
 
 After the preflight, run `bd prime` and follow the live repository guidance:
 
@@ -116,7 +116,7 @@ Use repository-owned synchronization wrappers. Do not treat
 `.beads/issues.jsonl` as the database, run `bd import` during ordinary sync, or
 call a raw Dolt push when the repository requires a guarded wrapper.
 
-## Shared-library coordination channel
+### Shared-library coordination channel
 
 Use a coordination channel when a repository owns a library, compiler,
 framework, schema, generated contract, toolchain, or adapter consumed by more
@@ -126,7 +126,7 @@ public seam or duplicate another consumer's upstream work.
 The channel is discovery history. It does not own tasks, branches, pull
 requests, source, releases, or permission to edit another agent's work.
 
-### Locate the channel
+#### Locate the channel
 
 Run the target repository's Beads preflight. Then search the live database:
 
@@ -147,7 +147,7 @@ When a current channel exists:
 An absent channel does not prove that no related work exists. Continue with
 source, history, task, and pull-request checks.
 
-### Classify the channel as non-actionable
+#### Classify the channel as non-actionable
 
 Prefer a repository-defined non-actionable record type when one exists.
 Otherwise use this portable Beads shape:
@@ -166,7 +166,7 @@ Create a channel only when the repository is shared, no current channel exists,
 and the user or repository policy authorizes the write. Use the same reviewed
 client and verify the created record through a fresh read.
 
-### Append intent and outcome entries
+#### Append intent and outcome entries
 
 Use comments because they are durable, timestamped, and append-only:
 
@@ -201,7 +201,7 @@ canonical label to the successor, label the old record
 `coordination:shared-library-history-archive`, and add bidirectional pointers.
 Keep only one current channel.
 
-### Preserve authority boundaries
+#### Preserve authority boundaries
 
 - The live task owns task status and assignment.
 - The pull request records branch ownership and review handoff.
@@ -213,7 +213,7 @@ When Caf/CML is available, accepted CML can describe the policy, stable refs,
 scope, and expected relationships. A Caf graph can project the links. Neither
 CML nor the graph replaces current Beads comments, Git history, or PR state.
 
-## Recover a client/schema mismatch
+### Recover a client/schema mismatch
 
 When the read-only open reports different client and database schemas:
 
@@ -229,7 +229,7 @@ When the read-only open reports different client and database schemas:
 Do not downgrade or hand-edit migration records, copy a database backward,
 implicitly migrate, or use a temporary source build for writes.
 
-## Explicit migrations
+### Explicit migrations
 
 Treat a schema upgrade as a separate coordinated project. Identify one
 authoritative clone, back up the database and a semantic export, inspect every
@@ -238,7 +238,7 @@ publish the database, and update every participating repository pin.
 
 An ordinary issue command must never be the first operation by a newer client.
 
-## Handoff
+### Handoff
 
 Follow `bd prime` at completion. Update or close only the issue that the agent
 owns. Append the shared-library channel outcome when another consumer needs the

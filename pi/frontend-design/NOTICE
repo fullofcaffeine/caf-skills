@@ -1,0 +1,5 @@
+The frontend-design SKILL.md is based on Anthropic's frontend-design example at
+commit 00756142ab04c82a447693cf373c4e0c554d1005 in anthropics/skills.
+
+The trigger description was modified for this Codex skill collection. The body
+is otherwise retained from that Apache-2.0 version.

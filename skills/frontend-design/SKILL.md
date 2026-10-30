@@ -1,14 +1,20 @@
 ---
 name: frontend-design
-description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics.
-license: Complete terms in LICENSE.txt
+description: "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics."
+license: "Apache-2.0"
 ---
+
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:629f01e563fdac93b57fcfd7f3f1a43916e61b1f4f298056da310b71ebd9bb56. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:dbf5c7f8b15a08fb139c036a89576c3cc7c7b3db80ec9cec5b93d1fd8312019d -->
+
+# Frontend design
 
 This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 
 The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
 
-## Design Thinking
+## Design distinctive, production-grade frontends
+
+### Design Thinking
 
 Before coding, understand the context and commit to a BOLD aesthetic direction:
 - **Purpose**: What problem does this interface solve? Who uses it?
@@ -24,7 +30,7 @@ Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
 - Cohesive with a clear aesthetic point-of-view
 - Meticulously refined in every detail
 
-## Frontend Aesthetics Guidelines
+### Frontend Aesthetics Guidelines
 
 Focus on:
 - **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.
@@ -40,3 +46,22 @@ Interpret creatively and make unexpected choices that feel genuinely designed fo
 **IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
 
 Remember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
+
+Reason: A clear conceptual direction, executed precisely, produces interfaces people remember and trust.
+
+Examples:
+- A component library needs a new widget. Match the existing design system instead of inventing a new aesthetic.
+- A user asks for a landing page. Choose a specific tone and visual direction first, then implement it in working code with careful typography and spacing.
+
+Limits:
+- Do not ignore stated accessibility or framework constraints.
+- Do not ship placeholder or non-working code as the result.
+
+Authority boundary: This skill guides writing and review only. It grants no source write, tool, provider, task, or effect authority.
+
+## Included assets
+
+These files are part of the exact package closure. Including a file grants nothing by itself. This guidance-only package declares no actions or effects and includes no helper to run.
+
+- `LICENSE.txt` — reference; none
+- `NOTICE` — reference; none

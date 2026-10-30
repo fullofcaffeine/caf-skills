@@ -4,7 +4,7 @@ description: "Verify that a tracked task, bug, roadmap item, audit finding, pull
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f9fd1d161db8d2e453f5ee16e3836799cd07c19437ef02c78566eda8e13a4db7. Selection digest: sha256:a83562d44ceb4040307a1e3cbf34058e2b73013da2dbd9ea4ad52516eb4a0cce. Effective AgentSpec digest: sha256:1836fb439d9c7a94acceb790aa0b98f0fff74a9316ff5b8aef5cda95dfd27d2c -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f9fd1d161db8d2e453f5ee16e3836799cd07c19437ef02c78566eda8e13a4db7. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:1836fb439d9c7a94acceb790aa0b98f0fff74a9316ff5b8aef5cda95dfd27d2c -->
 
 # Confirm Work Still Needed
 
@@ -14,7 +14,7 @@ shared-library coordination records before creating a branch or recommendation.
 
 ## Confirm the work is still needed before claiming it
 
-## Verification workflow
+### Verification workflow
 
 1. Read the complete work item. Include its acceptance criteria, design, notes,
    dependencies, timestamps, and external links. Record the exact missing or
@@ -55,7 +55,7 @@ shared-library coordination records before creating a branch or recommendation.
    - For invalidated or unknown work, preserve the evidence and request the
      smallest decision or experiment.
 
-## Shared-library duplication preflight
+### Shared-library duplication preflight
 
 Use this preflight when the proposed work changes a reusable library, compiler,
 framework, schema, generated contract, toolchain, or adapter with several
@@ -81,7 +81,7 @@ repository policy authorizes it. After landing, handoff, abandonment, or
 supersession, append the matching outcome. The authoritative task and PR retain
 ownership.
 
-## Agent-owned pull requests
+### Agent-owned pull requests
 
 An open PR prepared by another active agent is not unclaimed work because it is
 ready, behind the base branch, or waiting for review. Leave its rebase, fixes,
@@ -102,7 +102,7 @@ the PR, the originating agent records a handoff, or current evidence shows that
 the work is abandoned. Record the transfer publicly before modifying the
 branch.
 
-## Recommendation rule
+### Recommendation rule
 
 Before answering “what is next?”, verify at least the proposed top item. For an
 older or high-priority item, inspect enough competing candidates to identify
@@ -122,7 +122,7 @@ Do not infer these claims:
 - a green historical PR proves current behavior after later changes.
 - a shared-library channel replaces source, Git, task, or PR checks.
 
-## Minimum evidence by item type
+### Minimum evidence by item type
 
 - **Bug:** current focused reproduction or a test that fails when the bug is
   present, plus the relevant implementation path.
@@ -138,7 +138,7 @@ Do not infer these claims:
   PR state, coordination-channel evidence, and at least one affected consumer
   when compatibility is part of the claim.
 
-## Reporting
+### Reporting
 
 Keep the result short and auditable:
 
