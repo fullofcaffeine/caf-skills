@@ -5,7 +5,7 @@ license: "LicenseRef-Cafetera-Private-Unpublished"
 argument-hint: "[repository or task id]"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:7d58ea3b61e35e9ef7fbd353e8bd53a1b98b6c285509431a01b11c9f233578b6. Selection digest: sha256:c2440263459139b4c1f8b2045867c0bdc48dafc82c70726f4add59690f5f8535. Effective AgentSpec digest: sha256:b14e133477d5934029c6e7aebd08d1ea0ed631de335579e3d36d4002e04a8803 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:70e5f59f7339bf4b6bd364683f969485ace92f51e4cf4615a1df527ed7bfe614. Selection digest: sha256:d418ec16563f76cc1d63b94e3db440d2d3a9566e1145158a52f8cd793e26c2ad. Effective AgentSpec digest: sha256:f9a4a78ea2ff399c7e88a48b5ee6099d4191ba2461a7039522c13e36d055abf3 -->
 
 # Caf work loop
 
@@ -68,7 +68,7 @@ Send architecture decisions, broad reviews, and non-converging work to an indepe
 
 ### Coordinate a swarm
 
-Any capable model can coordinate. The coordinator owns task selection, integration, and every commit to the main branch. Give each worker exactly one claimed task, one isolated worktree, the exact inputs and acceptance, and a stopping condition (`caf:agentspec:rule:cafetera-agent:bounded-worker-delegation`). Keep competing writers in separate worktrees, serialize integration, and gate the integrated result again. Keep the swarm small and within the worker limit in the prompt. Add a worker only when independent tasks make the total work cheaper or safer. A worker's report is evidence to verify, not acceptance.
+Any capable model can coordinate. The coordinator owns task selection, integration, and every commit to the main branch. Give each worker exactly one claimed task, one isolated worktree, the exact inputs and acceptance, and a stopping condition (`caf:agentspec:rule:cafetera-agent:bounded-worker-delegation`). Keep competing writers in separate worktrees, serialize integration, and gate the integrated result again. Every worker branch lives in its own worktree, never in the owner's primary checkout. The primary checkout stays on the default branch, and `caf situation` warns when it does not. After you create a worktree, or after a rebase that changes a lockfile, install dependencies there with the repository's locked install. In Caffeine, run `pnpm install --frozen-lockfile`, then `pnpm setup:backend`. Keep the swarm small and within the worker limit in the prompt. Add a worker only when independent tasks make the total work cheaper or safer. A worker's report is evidence to verify, not acceptance.
 
 ### Stop and report
 
