@@ -4,7 +4,7 @@ description: "Turn a product idea, feature, or UX correction into a reviewable o
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:7cbadfa463347c9249a80bd6cb1a8ffb45730deb44be28021e9f841268adc8db. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:78198771dea1121f96b42531e696b3202637b98ef1d06f37455e42c6d4a4179d -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:7cbadfa463347c9249a80bd6cb1a8ffb45730deb44be28021e9f841268adc8db. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:78198771dea1121f96b42531e696b3202637b98ef1d06f37455e42c6d4a4179d -->
 
 # Product Designer
 

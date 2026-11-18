@@ -4,7 +4,7 @@ description: "Find the clearest complete design with the least accidental comple
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:0cb842dee1a0b28cef6bb613cce4b52673b592850f184c47e5a7e3546e0652d0. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:104701101d96c8ef328dff2b0d34b33b4b98f8e11ffd983affab8a54bfbe6a9c -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:0cb842dee1a0b28cef6bb613cce4b52673b592850f184c47e5a7e3546e0652d0. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:104701101d96c8ef328dff2b0d34b33b4b98f8e11ffd983affab8a54bfbe6a9c -->
 
 # Keep It Simple
 

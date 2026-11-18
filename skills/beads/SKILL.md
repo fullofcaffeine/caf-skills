@@ -4,7 +4,7 @@ description: "Use Beads (`bd`) safely for durable issue tracking, dependencies, 
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:48ebef3a4d17c58a36728d8125508b4a6db55d46863e05d8b74b072a5b662d1f. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:8cdb0428b726bbc028d8116638d86393734d5a0f368059f27f8758cbcf64fe5d -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:48ebef3a4d17c58a36728d8125508b4a6db55d46863e05d8b74b072a5b662d1f. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:9c682c1adff12ee98591049f7e58ad43b69a65680b3dc6f8563979c50a7f3d86 -->
 
 # Beads
 
@@ -111,6 +111,9 @@ Prefer non-interactive commands and JSON output. Never use `bd edit`. Do not
 close unfinished work or create a Markdown checklist as a competing tracker.
 Use `bd remember` only for small keyed knowledge that later `bd prime` calls
 must inject. A memory value is mutable and is not an append-only activity log.
+
+In Cafetera, `caf describe caf:concept:statement:semantic-tree:tool-routes` names
+the one write route for task state and the read and recovery routes beside it.
 
 Use repository-owned synchronization wrappers. Do not treat
 `.beads/issues.jsonl` as the database, run `bd import` during ordinary sync, or

@@ -1,4 +1,4 @@
 interface:
   display_name: "Calibrate Reasoning Effort"
   short_description: "Choose and apply the lowest effective reasoning level"
-  default_prompt: "Use $calibrate-reasoning-effort to recommend $oracle-review before max or ultra when independent review can receive enough context, then apply and release the lowest effective local reasoning lease."
+  default_prompt: "Use $calibrate-reasoning-effort to recommend, apply, and release the lowest effective local reasoning lease."

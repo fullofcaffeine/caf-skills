@@ -1,0 +1,4 @@
+interface:
+  display_name: "Independent review"
+  short_description: "Find the Caf design and review routine"
+  default_prompt: "Use $independent-review to find Caf's brainstorm and design-review routine, and use it."

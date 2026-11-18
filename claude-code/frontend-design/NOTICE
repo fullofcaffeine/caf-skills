@@ -1,5 +1,13 @@
-The frontend-design SKILL.md is based on Anthropic's frontend-design example at
-commit 00756142ab04c82a447693cf373c4e0c554d1005 in anthropics/skills.
+The frontend-design SKILL.md is Anthropic's official frontend-design skill,
+version 1.1.1 of the frontend-design plugin in anthropics/claude-plugins-official:
+https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design
+Upstream file: plugins/frontend-design/skills/frontend-design/SKILL.md, sha256
+d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3.
 
-The trigger description was modified for this Codex skill collection. The body
-is otherwise retained from that Apache-2.0 version.
+The description and the body text are retained from that Apache-2.0 version.
+Caf generates each copy from CML: the heading is the package title, each
+section heading is one level lower, the license line is the SPDX identifier,
+and Caf adds a generated header, a guidance section, limits, and an asset list.
+
+An earlier copy was based on Anthropic's frontend-design example at commit
+00756142ab04c82a447693cf373c4e0c554d1005 in anthropics/skills.

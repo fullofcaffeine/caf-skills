@@ -4,7 +4,7 @@ description: "Wait for background builds, tests, reviews, or jobs without repeat
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:d0449d6b3b7fccc5ba5c04ee89513a0724d8f0674638eb4e1cada48ce4c149d6. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:a40101bacb205af84641bbb506e4717a4529c4ba94bb8ba7396dcc45f794e6a6 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:d0449d6b3b7fccc5ba5c04ee89513a0724d8f0674638eb4e1cada48ce4c149d6. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:a40101bacb205af84641bbb506e4717a4529c4ba94bb8ba7396dcc45f794e6a6 -->
 
 # Wait for completion
 

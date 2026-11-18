@@ -1,10 +1,10 @@
 ---
 name: calibrate-reasoning-effort
-description: "Assess task complexity, recommend the lowest effective reasoning setup—low, medium, high, xhigh, max, or ultra—and automatically apply it for subsequent turns while preserving the currently selected model, including GPT-6 Astra and GPT-5.6 Sol, whenever a supported host control or the bundled harness-detecting helper is available. Use before substantial work, whenever scope or risk changes, when starting or claiming a task, choosing a thinking label, planning an agent run, answering which reasoning level is appropriate, or balancing quality against latency and token usage. Before max or ultra, recommend oracle-review when a slower independent review can receive enough exact context. Treat every level as a phase-scoped lease, release it as soon as a cheaper level becomes effective, and keep max or xhigh only for the shortest necessary decision window."
+description: "Assess task complexity, recommend the lowest effective reasoning setup—low, medium, high, xhigh, max, or ultra—and automatically apply it for subsequent turns while preserving the currently selected model, including GPT-6 Astra and GPT-5.6 Sol, whenever a supported host control or the bundled harness-detecting helper is available. Use before substantial work, whenever scope or risk changes, when starting or claiming a task, choosing a thinking label, planning an agent run, answering which reasoning level is appropriate, or balancing quality against latency and token usage. An effort level is never a reason to ask for oracle-review; Oracle joins only as the second opinion, on the closed trigger list of loop-defaults package B, when the owner asks, or by judgement within the daily loop limit, as caf:concept:model:independent-review-v0 says. Treat every level as a phase-scoped lease, release it as soon as a cheaper level becomes effective, and keep max or xhigh only for the shortest necessary decision window."
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:f7b5af895706d134d2ab5eb7c74ea3e32fad5df24a510764659768ba7ecc34c6. Selection digest: sha256:7c941a31cdaa09f3ab3967e23a3cab2edca54e5e1daa0d70bb927767883c26ab. Effective AgentSpec digest: sha256:ea4326c1ff73a1a0dc68b21a3ab8f34941e5aac199cc3a76e7e6e7743f3022b3 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:d1ebab3fed3d96d52c9cdcfbefa39f788ae9d9aa185fc307c8b6069ef884cf16. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:b27fa698275a8a6c64721aa5b9079d07b89a39f24235a41e980997214baf9245 -->
 
 # Calibrate Reasoning Effort
 
@@ -30,8 +30,10 @@ Calibration has three required steps when runtime control is available:
 
 1. Recommend and announce the lowest effective level.
 2. Apply that level immediately for subsequent turns.
-3. Before recommending `max` or `ultra`, assess whether `$oracle-review` can
-   receive enough exact context and provide a useful independent pass.
+3. Do not ask for `$oracle-review` because you choose `max` or `ultra`.
+   Oracle is the second-opinion role. It joins only on the closed trigger list
+   of loop-defaults package B, when the owner asks, or by judgement within the
+   daily loop limit, as `caf:concept:model:independent-review-v0` says.
 4. Before the next substantial action after a stable phase boundary, reassess
    and immediately apply the newly appropriate level. Treat every setting as a
    phase lease, never as a task or session default. Keep `max` and `xhigh` only
@@ -197,7 +199,8 @@ turn.
      in parallel.
 3. Select the level from the table below. Let a severe signal dominate an
    average of many harmless signals; do not use a mechanical point score.
-4. If the candidate is `max` or `ultra`, apply the Oracle-first check below.
+4. If the candidate is `max` or `ultra`, do not add Oracle because of the
+   level; see the Oracle section below.
 5. Announce the recommendation before substantial work, usually in one line:
 
    `Recommended reasoning: high — dependency invalidation can silently reuse stale work, so the task needs careful invariants and differential tests.`
@@ -229,10 +232,15 @@ turn.
 8. Recalibrate only when evidence changes the task shape. Do not oscillate
    between levels for individual commands inside one stable task.
 
-### Check Oracle before max or ultra
+### Oracle is not an effort trigger
 
-Before recommending local `max` or `ultra`, recommend `$oracle-review` first
-when all these conditions hold:
+Choosing local `max` or `ultra` does not by itself call for `$oracle-review`.
+Oracle is the second-opinion role in
+`caf:concept:model:independent-review-v0`. The design reviewer is the first
+route for an architecture decision. Oracle joins on the closed trigger list of
+loop-defaults package B, when the owner asks, or by judgement within the daily
+loop limit. Before you add it by judgement, make sure all these conditions
+hold:
 
 - the decision benefits from a slower independent planning or review pass;
 - exact repository sources, current evidence, constraints, and the decision
@@ -247,12 +255,11 @@ does not converge. State why Oracle is useful and identify the exact decision
 or artifact it will review. Use the canonical `$oracle-review` skill. Do not
 invent a manual browser or transcript workflow.
 
-Recommend local `max` first when the hard part depends on immediate compiler or
-test feedback, fast repository-local inspection, confidential state that cannot
-be packaged safely, an active incident, or another condition that makes an
-external review incomplete or too slow. Use `ultra` only when real independent
-local workstreams also justify subagents. Oracle is an independent reviewer,
-not a substitute name for `ultra`.
+Choose local `max` for the hardest tightly coupled reasoning, for example when
+the work depends on immediate compiler or test feedback, fast
+repository-local inspection, confidential state, or an active incident. Use
+`ultra` only when real independent local workstreams also justify subagents.
+Oracle is an independent reviewer, not a substitute name for `ultra`.
 
 If Oracle is selected, use the lowest effective local level to prepare exact
 context and continue independent work. Recalibrate when the response arrives.
@@ -266,8 +273,8 @@ Oracle advice remains advisory and does not accept a plan, change, or effect.
 | `medium` | The task is a bounded implementation or CI/tooling change using known patterns, but needs coordinated edits or a focused test. | Routine CI wiring, a small API addition, a straightforward bug with a reproducer. |
 | `high` | Correctness depends on complex debugging, multi-component behavior, performance, dependencies, concurrency, lifecycle, or several validation layers. The seam is still bounded. | Dependency graph observation, process cleanup, compiler lowering, cache-key design without reuse. |
 | `xhigh` | Architecture, compatibility, release, security, provenance, or broad semantic decisions could produce believable wrong behavior or unsafe state. Require a deliberate second pass. | Semantic cache reuse, security boundaries, data migration, broad compatibility or release gates. |
-| `max` | Oracle was unsuitable or insufficient, and this is among the hardest tightly coupled single-agent reasoning work. A wrong design would be very expensive and cannot be safely split. | Selecting a compiler-wide semantic boundary that depends on immediate local feedback, changing 1.0 evidence policy, high-impact provenance strategy. |
-| `ultra` | Oracle was unsuitable or insufficient, and the task genuinely benefits from coordinated parallel agents with meaningful independent workstreams that can later be synthesized. | A cross-repository compatibility audit with independent target reviews, or research plus isolated implementation and validation streams. |
+| `max` | This is among the hardest tightly coupled single-agent reasoning work. A wrong design would be very expensive and cannot be safely split. | Selecting a compiler-wide semantic boundary that depends on immediate local feedback, changing 1.0 evidence policy, high-impact provenance strategy. |
+| `ultra` | The task genuinely benefits from coordinated parallel agents with meaningful independent workstreams that can later be synthesized. | A cross-repository compatibility audit with independent target reviews, or research plus isolated implementation and validation streams. |
 
 These six levels calibrate the model that is already selected. They support
 GPT-6 Astra, GPT-5.6 Sol, and other host-supported reasoning models. Never
@@ -349,9 +356,9 @@ cost rather than diff size or prestige:
 | --- | --- | --- |
 | Change one authorization condition in a tiny file. | `xhigh`, single-agent | The diff is tiny, but a plausible mistake crosses a security boundary and deserves a second pass. |
 | Apply a huge generated rename with an exact deterministic checker and cheap rollback. | `low`, single-agent | File count is large, but reasoning is mechanical and decisive verification is cheap. |
-| Review a packageable cross-system architecture decision with stable evidence. | `$oracle-review`, then recalibrate | A slower independent pass can challenge the design before an expensive local lease. |
-| Resolve one tightly coupled compiler architecture decision through immediate compile feedback that Oracle cannot observe. | `max`, single-agent | The work is difficult, local evidence changes quickly, and parallel agents would add coordination without independent ownership. |
-| Audit four independent target integrations after Oracle cannot receive decisive private evidence. | `ultra`, multi-agent | Independent local workstreams can run concurrently and materially reduce elapsed time and review risk. |
+| Review a packageable cross-system architecture decision with stable evidence. | Design reviewer first; add `$oracle-review` on a trigger-list case, on owner request, or by judgement within the daily limit, as caf/workspace/IndependentReview.hx says, then recalibrate | The first independent read is fast; the slow second opinion is kept for named cases and real need. |
+| Resolve one tightly coupled compiler architecture decision through immediate compile feedback. | `max`, single-agent | The work is difficult, local evidence changes quickly, and parallel agents would add coordination without independent ownership. |
+| Audit four independent target integrations that depend on decisive private evidence. | `ultra`, multi-agent | Independent local workstreams can run concurrently and materially reduce elapsed time and review risk. |
 
 If a supposedly mechanical rewrite lacks a decisive checker, raise it to
 `medium`. If the independent streams cannot be cleanly owned and synthesized,
