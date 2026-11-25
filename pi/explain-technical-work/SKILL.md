@@ -4,7 +4,7 @@ description: "Make specialized explanations understandable to capable newcomers 
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:b4d83ab9a4b3225cb2e76392c6bacc0d0133fa77ad1a892959be65898e2547a8. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:b721f7764455f0bed0ad00853e3bd04dc29003b0afd10977137a7747ec9cc8b5 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:b4d83ab9a4b3225cb2e76392c6bacc0d0133fa77ad1a892959be65898e2547a8. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:c26a5c70b66d089ea33f7c7126d0ef9a78f989a9443eae0b04927f0400ec6deb -->
 
 # Explain Technical Work
 

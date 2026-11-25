@@ -4,7 +4,7 @@ description: "Guidance for distinctive, intentional visual design when building 
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:ef68c75b8a2fe214d83596b95e0f9ce929394caee500ece5127b64b3efe31796. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:1403bb6b338383179b3cd4a0d8fdb962057aa91f575dce7a8bb3c4fa9623a5b2 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:ef68c75b8a2fe214d83596b95e0f9ce929394caee500ece5127b64b3efe31796. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:ebb0dfbff9a86746905660f36215e43a10867cb7306c66550e5e49ade5ebcf43 -->
 
 # Frontend design
 

@@ -4,7 +4,7 @@ description: "Use when the owner asks for a brainstorm, a design review, or an i
 license: "LicenseRef-Cafetera-Private-Unpublished"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:17ca679e6d86b0e57c0302b40f1c79b3f2f237ecf82ce3dc18cffe90d0ade31e. Selection digest: sha256:05ad2eaa4674a8dcbdbee27a41bd7849c794f815d1f82c444ef632ce68d643dc. Effective AgentSpec digest: sha256:f0a61fd6c11cfac9c77cc34e2a7c463dfd6eaae1ce83acc8aaa2da270b0b653d -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:17ca679e6d86b0e57c0302b40f1c79b3f2f237ecf82ce3dc18cffe90d0ade31e. Selection digest: sha256:8d79c9b95c71894a00717b7b8a4b5313525d1c8841f28579a8d5a663f1523d2c. Effective AgentSpec digest: sha256:f0a61fd6c11cfac9c77cc34e2a7c463dfd6eaae1ce83acc8aaa2da270b0b653d -->
 
 # Independent review
 

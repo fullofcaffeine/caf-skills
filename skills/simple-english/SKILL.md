@@ -4,7 +4,7 @@ description: "Write or rewrite technical text with the rules of ASD-STE100 Simpl
 license: "MIT"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f2826fadcbc9fe03d2e5f27921ac83b26dcc40f129d7e294defdef6704acc67. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:7f0598d37476a5b829e923afe4a372f594538d555f2ab179f5a1aa9e84a69871 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:4f2826fadcbc9fe03d2e5f27921ac83b26dcc40f129d7e294defdef6704acc67. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:277ff63b8a051b26596a865ad197ffeca769b4cc4ff7011ae5f986ccdf3350f8 -->
 
 # Simple English: Write Like an Aerospace Manual
 

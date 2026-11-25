@@ -4,7 +4,7 @@ description: "Assess task complexity, recommend the lowest effective reasoning s
 license: "Apache-2.0"
 ---
 
-<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:d1ebab3fed3d96d52c9cdcfbefa39f788ae9d9aa185fc307c8b6069ef884cf16. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:b27fa698275a8a6c64721aa5b9079d07b89a39f24235a41e980997214baf9245 -->
+<!-- GENERATED skill projection. Edit selected CML and source assets, not this directory. Package digest: sha256:d1ebab3fed3d96d52c9cdcfbefa39f788ae9d9aa185fc307c8b6069ef884cf16. Selection digest: sha256:f48360a47c9ca25057ff9a59a5deb12bd29751426a35aa1812a53c9110145ec5. Effective AgentSpec digest: sha256:259191d65884d53dec058db4f48455e3722ce8ba628fd14558b9dac5b9e66c87 -->
 
 # Calibrate Reasoning Effort
 
@@ -34,6 +34,9 @@ Calibration has three required steps when runtime control is available:
    Oracle is the second-opinion role. It joins only on the closed trigger list
    of loop-defaults package B, when the owner asks, or by judgement within the
    daily loop limit, as `caf:concept:model:independent-review-v0` says.
+   While the owner's Oracle pause
+   `caf:concept:statement:independent-review:oracle-paused` holds, ask for no
+   Oracle at all: the independent reviewer's binding gives the second opinion.
 4. Before the next substantial action after a stable phase boundary, reassess
    and immediately apply the newly appropriate level. Treat every setting as a
    phase lease, never as a task or session default. Keep `max` and `xhigh` only
@@ -233,6 +236,12 @@ turn.
    between levels for individual commands inside one stable task.
 
 ### Oracle is not an effort trigger
+
+While the owner's Oracle pause
+`caf:concept:statement:independent-review:oracle-paused` holds, do not use
+`$oracle-review` at all. The independent reviewer's binding gives each second
+opinion, as that statement says. The rest of this section applies after the
+owner resumes Oracle.
 
 Choosing local `max` or `ultra` does not by itself call for `$oracle-review`.
 Oracle is the second-opinion role in
